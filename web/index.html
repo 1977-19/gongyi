@@ -343,6 +343,36 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
 #secret .bl{background:#231d14;color:#231d14}
 #secret .btn{margin-top:14px;background:#231d14;color:#efe8d4}
 
+/* park tips */
+.tips{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 40px;max-width:980px}
+.tips li{position:relative;padding:12px 0 12px 34px;border-bottom:1px solid rgba(18,50,31,.12)}
+.tips li::before{content:"";position:absolute;left:4px;top:19px;width:16px;height:10px;border-left:3px solid #3fa34d;border-bottom:3px solid #3fa34d;transform:rotate(-45deg)}
+@media(max-width:700px){.tips{grid-template-columns:1fr}}
+/* rule board */
+.board{max-width:880px;background:#2b5236;color:#f1eedf;border-radius:12px;border:6px solid #1c3824;box-shadow:0 24px 40px -24px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.08);padding:clamp(18px,4vw,34px)}
+.bh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 20px;border-bottom:2px solid rgba(241,238,223,.35);padding-bottom:12px;margin-bottom:8px}
+.bh b{font:400 clamp(24px,3.6vw,32px)/1.2 "ZCOOL QingKe HuangYou",sans-serif}
+.bh span{font-size:13px;opacity:.7}
+.rl{counter-reset:r;list-style:none;margin:0;padding:0}
+.rl li{counter-increment:r;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:4px 10px;padding:12px 0;border-bottom:1px dashed rgba(241,238,223,.2);font-size:17px}
+.rl li::before{content:counter(r);font:400 26px/1 "ZCOOL QingKe HuangYou",sans-serif;color:#cfe3b9}
+.rl li>span:first-child{grid-column:2}
+.rl .slip{grid-column:2;justify-self:start;font:400 clamp(20px,2.6vw,24px)/1.25 "Zhi Mang Xing","Kaiti SC","STKaiti",cursive;color:#8b1a10;background:#f1e6c8;padding:6px 14px 4px;transform:rotate(var(--r,-2deg));box-shadow:0 3px 6px rgba(0,0,0,.35);margin:6px 0 2px}
+.rl .ghost{opacity:.28;border-bottom:0}
+/* escape story */
+.game{max-width:760px;background:#14110e;color:#e6dccb;border-radius:14px;padding:clamp(20px,4vw,32px);box-shadow:0 24px 50px -24px #000}
+.gtop{display:flex;justify-content:space-between;gap:12px;font-size:14px;opacity:.7;margin-bottom:14px}
+#gclock{font-variant-numeric:tabular-nums;color:#e7a54a}
+.gtext{font-size:18px;line-height:1.9;min-height:8em}
+.gtext p{margin:0 0 12px}
+.gtext h3{font:400 30px/1.2 "ZCOOL QingKe HuangYou",sans-serif;color:#d2402c;margin:0 0 10px}
+.gtext h3.good{color:#8fd46a}
+.gtext .no{display:inline-block;font-size:13px;padding:2px 10px;border-radius:999px;background:#3a1410;color:#f0c8b8;margin-bottom:8px}
+.gch{display:grid;gap:10px;margin-top:12px}
+.gch button{min-height:52px;text-align:left;padding:12px 18px;border-radius:10px;border:1px solid #4a3c30;background:#221b16;color:#f1e7d6;font-size:16.5px;cursor:pointer;line-height:1.5}
+.gch button:hover{background:#2c231c;border-color:#7a5a40}
+.gch button.re{background:#7d120c;border-color:#7d120c;text-align:center}
+
 .w{transition:none}
 .w.f{color:#9c140c}
 .blink{transform-box:fill-box;transform-origin:center;animation:bl 5s infinite}
@@ -368,7 +398,7 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
     <span><span id="brand">归林</span>计划</span>
   </button>
   <nav class="links" aria-label="主导航">
-    <a href="#why">为什么种树</a><a href="#join-ways">参与</a><a href="#app">App</a><a href="#impact">成果</a><a href="#map-s">林区地图</a><a href="#faq">问答</a>
+    <a href="#why">为什么种树</a><a href="#join-ways">参与</a><a href="#app">App</a><a href="#impact">成果</a><a href="#map-s">林区地图</a><a href="#rules">入园须知</a><a href="#faq">问答</a>
   </nav>
   <span class="cnt">已有 <span class="cntn">12,408</span> 位<span class="w" data-t="肥料">志愿者</span></span>
   <button class="btn sec sm snd" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8v4h3l4 3V5L6 8z" fill="currentColor"/><path d="M13 7a4 4 0 0 1 0 6M15 5a7 7 0 0 1 0 10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span>聆听森林</span></button>
@@ -399,7 +429,7 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
         <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#fff1c2"/><circle cx="28" cy="24" r="9" fill="#ffc83a"/><path d="M14 40h28" stroke="#3fa34d" stroke-width="4" stroke-linecap="round"/></svg><h3>给街道降温</h3><p>夏天，树荫下的路面温度可以比暴晒处低十几度。行道树多的街区，傍晚明显更凉快。</p></div>
         <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#dff1fb"/><path d="M28 14c6 9 9 14 9 19a9 9 0 0 1-18 0c0-5 3-10 9-19z" fill="#4aa8d8"/></svg><h3>接住雨水</h3><p>树冠和根系能截住一部分雨水，让暴雨来得慢一点，下水道也不那么容易漫出来。</p></div>
         <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#e6f4dc"/><path d="M18 34c4-8 8-8 10 0s6 8 10 0" stroke="#2f8a3e" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg><h3>挡住噪音</h3><p>成排的树能吸收和散射一部分车流声。住在林荫道旁边的人，夜里会睡得安稳一些。</p></div>
-        <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#ffe3e0"/><path d="M28 40s-12-7-12-15a6 6 0 0 1 12-2 6 6 0 0 1 12 2c0 8-12 15-12 15z" fill="#f06b5a"/></svg><h3>让人放松</h3><p>不少研究发现，经常在树多的地方散步，人会更放松、睡得更好。哪怕只是窗外有一棵树。</p></div>
+        <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#ffe3e0"/><path d="M28 40s-12-7-12-15a6 6 0 0 1 12-2 6 6 0 0 1 12 2c0 8-12 15-12 15z" fill="#f06b5a"/></svg><h3>让人放松</h3><p>不少研究发现，经常在树多的地方散步，人会更放松、睡得更好。哪怕只是窗外有一棵树。如果窗外多了一棵你没见过的，请告诉我们。</p></div>
       </div>
     </div>
   </section>
@@ -409,9 +439,9 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
       <h2>三种参与方式，总有一种适合你</h2>
       <p class="intro">不需要任何经验。带上家人朋友，或者一个人来也很好。</p>
       <div class="progs">
-        <div class="prog"><h3>社区植树日</h3><div class="when">每月第一个周六 上午 9:00</div><p>在指定林区集合，工具、手套和树苗<span class="sk">都</span>由我们准备。你只需要穿一双不怕脏的鞋，再带一瓶水。</p></div>
+        <div class="prog"><h3>社区植树日</h3><div class="when">每月第一个周六 上午 9:00</div><p>在指定林区集合，工具、手套和树苗<span class="sk">都</span>由我们准备。你只需要穿一双不怕脏的鞋，再带一瓶水。返程按出发时的人数安排座位，请不要带新朋友上车。</p></div>
         <div class="prog"><h3>认养一棵树</h3><div class="when">随时开始</div><p>选一棵你喜欢的树，挂上写着你名字的铭牌。App 会提醒你什么时候该浇水，也会记录它每个月长高了多少。</p></div>
-        <div class="prog"><h3>林区巡护</h3><div class="when">周末 7:00–9:00</div><p>沿步道巡查两小时，记录鸟类、清理垃圾、检查新树的支架。适合喜欢安静、愿意早起的人。</p></div>
+        <div class="prog"><h3>林区巡护</h3><div class="when">周末 7:00–9:00</div><p>沿步道巡查两小时，记录鸟类、清理垃圾、检查新树的支架。适合喜欢安静、愿意早起的人。如果步道比地图上的长，请原路返回。</p></div>
       </div>
     </div>
   </section>
@@ -429,7 +459,7 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
           <div class="row"><button class="btn pri" id="water" type="button">浇水</button><small>已浇水 <b id="wn">0</b> 次</small></div>
         </div></div>
         <ul class="feat">
-          <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#dff1fb"/><path d="M22 10c5 7 7 11 7 15a7 7 0 0 1-14 0c0-4 2-8 7-15z" fill="#4aa8d8"/></svg><div><b>浇水提醒</b>根据天气和土壤湿度，告诉你今天要不要去看看它。</div></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#dff1fb"/><path d="M22 10c5 7 7 11 7 15a7 7 0 0 1-14 0c0-4 2-8 7-15z" fill="#4aa8d8"/></svg><div><b>浇水提醒</b>根据天气和土壤湿度，告诉你今天要不要去看看它。它也会等你。</div></li>
           <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#e6f4dc"/><path d="M14 32V20M22 32V14M30 32V24" stroke="#2f8a3e" stroke-width="4" stroke-linecap="round"/></svg><div><b>生长日记</b>每个月自动记录树高和冠幅，一年后回头看，会很有成就感。</div></li>
           <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#fff4cf"/><path d="M22 34s-9-9-9-15a9 9 0 0 1 18 0c0 6-9 15-9 15z" fill="#f0a030"/><circle cx="22" cy="19" r="3.5" fill="#fff"/></svg><div><b>林区地图</b>查看每片林区的开放时间、步道和洗手间位置。</div></li>
           <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#ffe3e0"/><path d="M12 26c6-1 9-7 16-7 3 0 5 2 5 4l-5 1c-2 5-8 7-16 2z" fill="#6b5a4a"/><circle cx="30" cy="22" r="1.2" fill="#fff"/></svg><div><b>鸟类图鉴</b>拍下你遇到的鸟，App 帮你认出它是谁。</div></li>
@@ -444,14 +474,14 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
       <p class="intro">每个季节，林区都有不一样的事情可以做。</p>
       <div class="seasons">
         <div><b>春</b><h3>植树节</h3><p>三月土壤刚解冻，是种树最好的时候。每年这时候报名的人最多。</p></div>
-        <div><b>夏</b><h3>萤火虫之夜</h3><p>六月的晚上，第二林区的溪边会有萤火虫。记得带驱蚊水。</p></div>
+        <div><b>夏</b><h3>萤火虫之夜</h3><p>六月的晚上，第二林区的溪边会有萤火虫。萤火虫的光是绿色的，看到红色的请绕开。</p></div>
         <div><b>秋</b><h3>银杏节</h3><p>十一月，河滩那条银杏大道会铺满金色的落叶，很适合拍照。</p></div>
         <div><b>冬</b><h3>护树行动</h3><p>给新树裹上草绳、刷上白漆。小树<span class="sk">还</span>很怕冷，需要人帮它过冬。</p></div>
       </div>
     </div>
   </section>
 
-  <section class="band a1" data-p="0.045">
+  <section class="band a1b" data-p="0.045">
     <div class="in">
       <h2>林区里的邻居</h2>
       <p class="intro">上个月，巡护志愿者在三片林区一共记录到 43 种鸟。下面是最常见的几位。</p>
@@ -459,19 +489,35 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
     </div>
   </section>
 
-  <section class="band a1b" data-p="0.06">
+
+  <section class="band a1" data-p="0.05" style="padding-top:0">
+    <div class="in">
+      <h2>游园小贴士</h2>
+      <p class="intro">第一次来林区？出发前花一分钟看看这些。</p>
+      <ul class="tips">
+        <li>林区开放时间是 06:00 至 17:00。闭园前会播放音乐《回家》，听到就可以慢慢往出口走啦。</li>
+        <li>园内禁止明火和烧烤，宠物请系好牵引绳。</li>
+        <li>请走步道，不要踩新种的草坪。</li>
+        <li>每棵树都挂着铭牌，扫一扫就能看到它的故事。</li>
+        <li>林区信号不太好，建议提前下载离线地图。</li>
+        <li>树长得很快。如果觉得步道比上次窄了，属于正常现象。</li>
+      </ul>
+    </div>
+  </section>
+  <section class="band a1" data-p="0.06">
     <div class="in">
       <h2>媒体报道</h2>
       <ul class="news">
         <li><span class="src">绿洲日报<br>2025 年 4 月</span><b>废弃纺织厂变身城市森林，周边居民：“终于有地方散步了”</b></li>
         <li><span class="src">城市周刊<br>2025 年 9 月</span><b>归林计划：一场市民自发的绿化<span class="sk">活</span>动</b></li>
         <li><span class="src">绿洲电视台<br>2026 年 3 月</span><b>植树节，三百多名市民走进第一林区</b></li>
+        <li><span class="src">绿洲晚报<br>2026 年 5 月</span><b>第三林区周边居民反映夜间常听到敲击声，园方回应：是啄木鸟</b></li>
         <li><span class="src">环境观察<br>2026 年 6 月</span><b>归林林区树木生长速度远超预期，专家称“土壤条件罕见”</b></li>
       </ul>
     </div>
   </section>
 
-  <div class="win" data-p="0.08"><span>第一林区，三月。植树日来了两百多人，大家都弄了一身泥。</span></div>
+  <div class="win" data-p="0.08"><span>第一林区，三月。植树日来了两百多人，大家都弄了一身泥。返程时清点，是两百零一个。</span></div>
 
 <!-- ============ 第二幕：有点不对 ============ -->
   <section class="band s2" id="impact" data-p="0.11">
@@ -666,23 +712,46 @@ footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);pad
     </div>
   </section>
 
-  <div class="win" data-p="0.63"><span>第五林区，八月。今年的树离步道比去年近了一些。</span></div>
-
-<!-- ============ 第四幕：别再往下了 ============ -->
-  <section class="band s5" id="rules" data-p="0.67">
+  <section class="band s5" id="rules" data-p="0.61" style="padding-top:0">
     <div class="in">
-      <h2>林区参观须知</h2>
-      <p class="intro">为了你和树木的安全，进入林区前请仔细阅读以下事项。</p>
-      <ol class="rules">
-        <li><span>林区开放时间为 06:00 至 17:00。日落后请立即离开，不要等同伴。</span></li>
-        <li><span>请勿在林区内呼唤亲人的全名。</span></li>
-        <li><span>请勿挖掘、翻动土壤。如果土是温的，请把它填回原处。</span></li>
-        <li><span>若有树向你弯腰，请回礼，然后缓慢离开。不要跑。</span></li>
-        <li><span>离开时请清点同行人数。</span><span class="scrawl" style="--r:-4deg">数了三遍，每次都多一个。</span></li>
-        <li><span>若人数比来时多，请不要回头，直接上车。</span><span class="scrawl" style="--r:2deg">我回头了。</span></li>
-      </ol>
+      <h2>入园须知</h2>
+      <p class="intro">以下是归林森林公园的正式入园须知，请在进入林区前完整阅读。旁边贴的纸条不是我们贴的，请不要相信。</p>
+      <div class="board">
+        <div class="bh"><b>归林森林公园　入园须知</b><span>第 4 版　绿洲市园林局监制</span></div>
+        <ol class="rl">
+          <li><span>本园开放时间为 06:00 至 17:00。广播播放《回家》时，请立即前往出口。</span></li>
+          <li><span>园内工作人员统一穿绿色马甲，佩戴工牌。遇到困难，请向他们求助。</span><span class="slip" style="--r:-3deg">绿马甲会带你去“看树”。别跟他们走。</span></li>
+          <li><span>园内每棵树都挂有铭牌。如果你看到一棵没有铭牌的树，请不要和它对视。</span><span class="slip" style="--r:2deg">首页那张图里就有一棵。你看见了吗？</span></li>
+          <li><span>请勿在林区内呼唤同伴的全名。如需联系，请使用手机。</span></li>
+          <li><span>林区内没有手机信号。</span><span class="slip" style="--r:-2deg">第 4 条和第 5 条，总有一条在骗你。</span></li>
+          <li><span>如果有人在背后叫你的名字，请先看地上的影子。影子数量不对时，不要回头。</span><span class="slip" style="--r:3deg">我回头了。</span></li>
+          <li><span>步道上的白色石子会指引你走到出口。请勿捡拾。</span><span class="slip" style="--r:-4deg">那不是石子。</span></li>
+          <li><span>园内不设夜间开放。如果你发现天黑了，而手表显示早于 17:00，请相信手表。</span><span class="slip" style="--r:2deg">相信天，不要相信表。</span></li>
+          <li><span>本园没有第五林区。</span><span class="slip" style="--r:-2deg">我现在就在第五林区写这张纸条。</span></li>
+          <li><span>请勿给树木浇水，树木由专人养护。</span><span class="slip" id="waternote" style="--r:3deg">浇过水的人，它会记得。</span></li>
+          <li><span>离园时请清点同行人数。如果人数变多了，不要问多出来的是谁。</span><span class="slip" style="--r:-3deg">数了三遍，每次都多一个。</span></li>
+          <li><span>本园工作人员不会穿红色马甲。</span><span class="slip" style="--r:2deg">穿红马甲的，是还没被种下的人。跟他走。</span></li>
+          <li class="ghost"><span>本须知共十二条。</span></li>
+        </ol>
+      </div>
     </div>
   </section>
+
+  <section class="band s5" id="escape" data-p="0.64" style="padding-top:0">
+    <div class="in">
+      <h2>你还在第五林区</h2>
+      <p class="intro">按照上面的入园须知，试试看你能不能在天黑前走出去。你可以多试几次。</p>
+      <div class="game" id="game" aria-live="polite">
+        <div class="gtop"><span id="gclock">16:47</span><span>已解锁结局 <b id="gcount">0</b> / 7</span></div>
+        <div class="gtext" id="gtext"></div>
+        <div class="gch" id="gch"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="win" data-p="0.67"><span>第五林区，八月。今年的树离步道比去年近了一些。</span></div>
+
+<!-- ============ 第四幕：别再往下了 ============ -->
 
   <section class="band s5" data-p="0.7" style="padding-top:0">
     <div class="in wall">
@@ -805,7 +874,7 @@ GL.P=0;
 try{
   const back=GL.ls.get('end')==='1',sp=document.getElementById('splash'),m=document.getElementById('splashmsg');
   if(back){m.textContent='欢迎回来，No.12409。';document.querySelectorAll('.cntn').forEach(e=>e.textContent='12,409')}
-  setTimeout(()=>{if(back)m.textContent='你的树已经长好了。'},700);
+  setTimeout(()=>{m.textContent=back?'你的树已经长好了。':'找到了。离你很近。'},700);
   setTimeout(()=>sp.classList.add('out'),back?1700:1400);
 }catch(e){}
 
@@ -847,6 +916,7 @@ function build(){
   for(let i=0;i<n;i++){
     const x=(i+.5)*W/n+(rnd()-.5)*W/n*.35,h=th*(.75+rnd()*.35),w=h*.045+3,Rr=h*.27,cy=gy-h*.68,k=((W/2-x)/(W/2)).toFixed(2);
     xs.push(x);
+    const odd=i===Math.max(1,Math.floor(n/2)-1);
     const seg=[[],[],[],[]];
     const br=(bx,by,len,a,d)=>{const ex=bx+Math.cos(a)*len,ey=by+Math.sin(a)*len;seg[d].push(`M${f(bx)} ${f(by)}L${f(ex)} ${f(ey)}`);
       if(d>0){const m=2+(rnd()<.4?1:0);for(let j=0;j<m;j++)br(ex,ey,len*(.62+rnd()*.14),a+(j-(m-1)/2)*.6+(rnd()-.5)*.3,d-1)}
@@ -855,8 +925,8 @@ function build(){
     trees+=`<g style="transform-origin:${f(x)}px ${gy}px;transform:rotate(calc(var(--lean) * ${k} * 1deg)) scale(var(--grow))">
     <g fill="none" stroke-linecap="round" style="opacity:var(--bare);stroke:var(--trunk)">${seg.map((a,d)=>`<path d="${a.join('')}" stroke-width="${f(Math.max(1,[w*.2,w*.35,w*.55,w*.85][d]))}"/>`).join('')}</g>
     <path d="M${f(x-w)} ${gy}C${f(x-w*.7)} ${f(gy-h*.3)} ${f(x-w*.5)} ${f(gy-h*.45)} ${f(x-w*.4)} ${f(gy-h*.62)}L${f(x+w*.4)} ${f(gy-h*.62)}C${f(x+w*.5)} ${f(gy-h*.45)} ${f(x+w*.7)} ${f(gy-h*.3)} ${f(x+w)} ${gy}Z" style="fill:var(--trunk)"/>
-    <rect x="${f(x-w*.6)}" y="${f(gy-h*.24)}" width="${f(w*1.2)}" height="${f(w*.75)}" rx="1.5" fill="#e6d3a3" style="opacity:calc(1 - var(--bare) * .7)"/>
-    <g style="opacity:var(--face);fill:var(--hole)"><ellipse cx="${f(x-w*.36)}" cy="${f(gy-h*.4)}" rx="${f(w*.17)}" ry="${f(w*.25)}"/><ellipse cx="${f(x+w*.36)}" cy="${f(gy-h*.4)}" rx="${f(w*.17)}" ry="${f(w*.25)}"/><ellipse cx="${f(x)}" cy="${f(gy-h*.31)}" rx="${f(w*.2)}" ry="${f(w*.38)}"/></g>
+    ${odd?'':`<rect x="${f(x-w*.6)}" y="${f(gy-h*.24)}" width="${f(w*1.2)}" height="${f(w*.75)}" rx="1.5" fill="#e6d3a3" style="opacity:calc(1 - var(--bare) * .7)"/>`}
+    <g style="opacity:${odd?'max(var(--face), .34)':'var(--face)'};fill:var(--hole)"><ellipse cx="${f(x-w*.36)}" cy="${f(gy-h*.4)}" rx="${f(w*.17)}" ry="${f(w*.25)}"/><ellipse cx="${f(x+w*.36)}" cy="${f(gy-h*.4)}" rx="${f(w*.17)}" ry="${f(w*.25)}"/><ellipse cx="${f(x)}" cy="${f(gy-h*.31)}" rx="${f(w*.2)}" ry="${f(w*.38)}"/></g>
     <g style="opacity:var(--leafo)"><circle cx="${f(x)}" cy="${f(cy+Rr*.25)}" r="${f(Rr*1.02)}" style="fill:var(--leafd)"/><circle cx="${f(x-Rr*.62)}" cy="${f(cy+Rr*.1)}" r="${f(Rr*.72)}" style="fill:var(--leaf)"/><circle cx="${f(x+Rr*.6)}" cy="${f(cy+Rr*.12)}" r="${f(Rr*.7)}" style="fill:var(--leaf)"/><circle cx="${f(x)}" cy="${f(cy-Rr*.25)}" r="${f(Rr*.85)}" style="fill:var(--leaf)"/><circle cx="${f(x-Rr*.3)}" cy="${f(cy-Rr*.5)}" r="${f(Rr*.4)}" style="fill:var(--leafh)" opacity=".85"/></g>
     </g>`;
     const L=Math.min(W/n*.8,115),bx=x+(rnd()-.5)*24,by=gy+(H-gy)*(.42+rnd()*.3),rot=(rnd()-.5)*10;
@@ -948,7 +1018,7 @@ if(!GL.reduce)setInterval(()=>{const pr=GL.ss(.12,1,GL.P);if(pr<=0)return;
 /* ---------- sapling ---------- */
 try{(function(){
 const svg=document.getElementById('sap'),msg=document.getElementById('sapmsg'),wn=document.getElementById('wn');
-const lines=['刚种下的小树苗，还有点害羞。','它长出了第一片新叶。','它比上周高了 3 厘米。','枝条开始分叉了，看起来很健康。','它已经能给一只麻雀遮阴了。','它长得很好。谢谢你一直照顾它。'];
+const lines=['刚种下的小树苗，还有点害羞。','它长出了第一片新叶。','它比上周高了 3 厘米。','枝条开始分叉了，看起来很健康。','它已经能给一只麻雀遮阴了。最近它总是朝你的方向长。','它长得很好。它已经记住你的样子了。'];
 let n=+(GL.ls.get('water')||0);
 function draw(drop){
   const st=Math.min(5,Math.floor(n/2)),h=40+st*20,top=150-h;
@@ -967,7 +1037,7 @@ GL.waterCount=()=>n;
 
 /* ---------- birds ---------- */
 try{
-const B=[['白头鹎','头顶一撮白毛，最爱吃樟树果','#8a8f6a'],['珠颈斑鸠','脖子上有一圈珍珠点','#b49a8a'],['灰喜鹊','成群结队，叫声很吵','#7fa0b8'],['乌鸫','会模仿别的鸟叫','#2b2b2b'],['戴胜','头上有一顶扇子冠','#d8925a'],['红嘴蓝鹊','拖着长长的尾巴','#4a76c4'],['普通翠鸟','第二林区溪边常见','#2aa3b8']];
+const B=[['白头鹎','头顶一撮白毛，最爱吃樟树果','#8a8f6a'],['珠颈斑鸠','脖子上有一圈珍珠点','#b49a8a'],['灰喜鹊','成群结队，叫声很吵','#7fa0b8'],['乌鸫','会模仿别的鸟叫','#2b2b2b'],['戴胜','头上有一顶扇子冠','#d8925a'],['红嘴蓝鹊','拖着长长的尾巴','#4a76c4'],['普通翠鸟','第二林区溪边常见','#2aa3b8'],['夜鹭','只在夜里叫，有人说像在喊人的名字','#5a6a7a']];
 document.getElementById('birds').innerHTML=B.map(b=>`<div class="bird"><i style="--c:${b[2]}"></i><div><b>${b[0]}</b><span>${b[1]}</span></div></div>`).join('');
 }catch(e){}
 
@@ -1062,6 +1132,38 @@ document.getElementById('post').addEventListener('submit',e=>{e.preventDefault()
   setTimeout(()=>{const r=document.createElement('div');r.className='reply';r.textContent='No.0417：快跑';body.appendChild(r);GL.buzz('heavy')},3600);
 });
 })()}catch(e){}
+
+/* ---------- escape story ---------- */
+try{(function(){
+const N={
+ s:{k:'16:47',t:['你和朋友阿杰在第五林区拍银杏，回过神来，天已经暗下来了。','园区广播开始放《回家》。','阿杰看了看手表：“还没到五点呢，再拍两张。”'],c:[['听广播的，马上去出口','a'],['看看手表，确实还早，再拍两张','e1']]},
+ a:{k:'16:47',t:['你们沿着步道往回走。地上的白色石子一路铺到前面的岔路口：左边那条铺着石子，右边是一条没铺石子的土路。','借着最后一点天光，你发现那些石子的形状很怪，有大有小，一头圆，一头尖，像是……'],c:[['跟着白色石子走，须知第 7 条说它会指引出口','e2'],['走没有石子的土路','b']]},
+ b:{k:'16:47',t:['土路尽头站着一个穿马甲的工作人员，背对着你们。','天太暗，看不清马甲是什么颜色。阿杰想直接过去问路。'],c:[['拉住阿杰，先打开手机电筒照一下','c'],['一起过去求助，须知第 2 条说可以','e3']]},
+ c:{k:'16:47',t:['电筒光下，马甲是红色的。','他转过身，满脸是泥。“把电筒关了，跟紧我，别出声。”他压低声音，“天黑以后，这片的树会挪到路上来。”'],c:[['跟着红马甲走','d'],['须知第 12 条说工作人员不穿红马甲。拉着阿杰往回跑','e4']]},
+ d:{k:'16:47',t:['你们跟着他在树之间穿行。有几次，你觉得刚刚走过的空地，回头再看已经站着一棵树。','出口的铁门就在前面了。这时，身后有人叫了你的全名。','是阿杰的声音。','可阿杰明明走在你前面。'],c:[['回头看一眼','e5'],['低头看地上的影子','f'],['不回头，继续走','g']]},
+ f:{k:'16:47',t:['电筒关着，地上本来不该有影子。可月光下，你数出了四个：你的、阿杰的、红马甲的。','还有一个比你们都高，手臂一直垂到地上，就贴在你的影子后面。'],c:[['不回头，继续走','g'],['伸手拉住阿杰，跑过去','e6']]},
+ g:{k:'17:00',end:'g',good:1,h:'出园',t:['铁门在你们身后关上了。','红马甲隔着栏杆说：“今天就送到这儿。”他转身走回林子里，马甲上的红色在黑暗里一点一点变淡。','你数了数：你，阿杰。两个人，一个不少。手表这时才跳到 17:00。','临走前他塞给你一张纸条：“回去以后，别再给 App 里那棵树浇水了。”','恭喜，你是这个月第 3 个走出第五林区的人。']},
+ e1:{k:'16:47',end:'e1',h:'多拍的那两张',no:'No.12410　No.12411',t:['你们又拍了两张。照片里，阿杰身后多了一棵树。','等你抬起头，手表还是 16:47，天已经全黑了。广播停了。','第二天，第五林区多了两块铭牌。']},
+ e2:{k:'16:47',end:'e2',h:'白色石子',no:'入林',t:['石子越来越密，一直把你们带到一棵很大的香樟树下。','树下已经挖好了两个坑，一个长一点，一个短一点。','刚好是你和阿杰的身高。']},
+ e3:{k:'16:47',end:'e3',h:'绿马甲',no:'评估合格',t:['他转过身来。马甲是绿色的，工牌上写着“上门评估师”。','他打量了你们一会儿，从口袋里掏出卷尺，笑着说：“迷路了吗？我带你们去看树。”']},
+ e4:{k:'16:47',end:'e4',h:'第十二条',no:'No.12410　No.12411',t:['你拉着阿杰跑回步道。身后，红马甲喊了你们几声，声音越来越远，最后被风声盖住了。','四周很安静，安静到你听得见根在土里长的声音。','它们长得很快，朝着你的脚。']},
+ e5:{k:'16:47',end:'e5',h:'回头',no:'多出来的那一个',t:['你回过头。身后什么都没有，只有一棵你没见过的树，没有铭牌。','等你再转回来，红马甲不见了，阿杰也不见了。','只有那个声音还在叫你。这次是从你前面。']},
+ e6:{k:'16:47',end:'e6',h:'第四个影子',no:'No.12410',t:['你一动，那个影子也动了。','它比你快。']}
+};
+const tx=document.getElementById('gtext'),ch=document.getElementById('gch'),ck=document.getElementById('gclock'),cnt=document.getElementById('gcount');
+let got={};try{got=JSON.parse(GL.ls.get('ends')||'{}')}catch(e){}
+cnt.textContent=Object.keys(got).length;
+function go(id,first){const n=N[id];ck.textContent=n.k;
+  let h='';if(n.end){h+=`<h3 class="${n.good?'good':''}">结局：${n.h}</h3>`;if(n.no)h+=`<span class="no">${n.no}</span>`;got[n.end]=1;GL.ls.set('ends',JSON.stringify(got));cnt.textContent=Object.keys(got).length;GL.buzz(n.good?'success':'heavy')}
+  else if(!first)GL.buzz('light');
+  tx.innerHTML=h+n.t.map(p=>`<p>${p}</p>`).join('');
+  ch.innerHTML=n.end?`<button type="button" class="re" data-g="s">${n.good?'再走一次':'重新开始'}</button>`:n.c.map(c=>`<button type="button" data-g="${c[1]}">${c[0]}</button>`).join('');
+  if(!first&&tx.getBoundingClientRect().top<70)document.getElementById('game').scrollIntoView({block:'start',behavior:GL.reduce?'auto':'smooth'});}
+ch.addEventListener('click',e=>{const b=e.target.closest('button');if(b)go(b.dataset.g)});
+go('s',true);
+const wn=document.getElementById('waternote');if(wn&&GL.waterCount&&GL.waterCount()>0)wn.textContent=`你浇过 ${GL.waterCount()} 次水。它记得。`;
+document.getElementById('water').addEventListener('click',()=>{if(wn)wn.textContent=`你浇过 ${GL.waterCount()} 次水。它记得。`});
+})()}catch(e){console.log(e)}
 
 /* ---------- sound: forest by day, something else by night ---------- */
 try{(function(){
