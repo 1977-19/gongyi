@@ -1,0 +1,70 @@
+name: Build IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    # Hosted Macs of one kind are sometimes all busy, so build on several kinds at once;
+    # whichever finishes first publishes the IPA, the others just re-upload the same file.
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-latest, macos-15-intel]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build app (unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project GuiLin.xcodeproj \
+            -scheme GuiLin \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee build.log
+
+      - name: Package IPA
+        run: |
+          rm -rf Payload
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/GuiLin.app Payload/
+          zip -qry GuiLin.ipa Payload
+          ls -la GuiLin.ipa
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v1.0.${{ github.run_number }}"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" \
+            --title "归林 $TAG" \
+            --notes "下载 GuiLin.ipa，用万能签签名安装。建议戴耳机，先点「聆听森林」再往下滑。" || true
+          gh release upload "$TAG" GuiLin.ipa --clobber || (sleep 10; gh release upload "$TAG" GuiLin.ipa --clobber) || true
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GuiLin-ipa-${{ matrix.runner }}
+          path: GuiLin.ipa
+
+      - name: Show errors
+        if: failure()
+        run: grep -nE "error:|BUILD FAILED" build.log | head -50 || true

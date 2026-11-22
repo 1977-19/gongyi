@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6cc3f0">
+<title>归林计划</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+QingKe+HuangYou&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 阳光、热情的城市环保公益宣传；前三分之一完全正常，越往下读语气不变，细节越不对劲
+   IDEA: 一张会随滚动“入夜”的公益海报：同一片树林从晴天走到午夜；同样的栏目（四季、鸟类）后来会再出现一次，内容已经变了
+   PICTURE: 固定在背后的树林剖面——树、草地、土层、根系；土里的“石头”、树皮上的“节疤”、太阳，都会慢慢露出真面目
+   COLOUR and TYPE: 叶绿 #1f7a3a、晴空蓝、阳光黄；纸面逐段泛黄发霉，最后是黑与血红；庆科黄油体做标语，思源黑体做正文，手写体是前人留下的警告
+   LAYOUT: 内容段落与“树林窗口”交替；六个歪掉的字藏在前半段，结尾才揭晓 */
+:root{color-scheme:light;--green:#1f7a3a;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:#050303;color:#12321f;font:16px/1.7 "Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.zc{font-family:"ZCOOL QingKe HuangYou","PingFang SC",sans-serif;font-weight:400}
+.hw{font-family:"Zhi Mang Xing","Kaiti SC","STKaiti","KaiTi",cursive}
+#scene{position:fixed;inset:0;z-index:0}
+#scene svg{display:block;width:100%;height:100%}
+.grain{position:fixed;inset:-60px;z-index:5;pointer-events:none;opacity:var(--grain,0);mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr .5s steps(3) infinite}
+@keyframes gr{0%{transform:translate(0,0)}33%{transform:translate(-30px,18px)}66%{transform:translate(22px,-26px)}}
+.vig{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:var(--vig,0);background:radial-gradient(ellipse at 50% 55%,transparent 35%,rgba(0,0,0,.85) 100%);animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{0%,100%{filter:none}12%{filter:brightness(.7)}}
+header,main{position:relative;z-index:2}
+
+/* splash */
+#splash{position:fixed;inset:0;z-index:50;background:linear-gradient(#6cc3f0,#e6f7ff 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#0f4a25;transition:opacity .6s,visibility .6s}
+#splash.out{opacity:0;visibility:hidden}
+#splash svg{width:84px;height:84px}
+#splash b{font:400 44px/1 "ZCOOL QingKe HuangYou",sans-serif}
+#splash p{margin:0;font-size:15px;opacity:.8;min-height:1.7em;text-align:center;padding:0 24px}
+#splash i{display:block;width:160px;height:4px;border-radius:4px;background:rgba(15,74,37,.15);overflow:hidden}
+#splash i::after{content:"";display:block;height:100%;width:0;background:#1f7a3a;animation:load 1.3s ease-out forwards}
+@keyframes load{to{width:100%}}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:14px;padding:calc(10px + var(--sat)) max(5vw,16px) 10px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(18,50,31,.08);transition:background .8s,color .8s}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;font:22px/1 "ZCOOL QingKe HuangYou",sans-serif;color:var(--green);background:none;border:0;padding:0;cursor:pointer;min-height:44px}
+.logo svg{width:30px;height:30px}
+.logo .hand{display:none}
+.nav .links{display:flex;gap:18px;margin-inline-start:auto;font-size:15px}
+.nav .links a{text-decoration:none;opacity:.8}.nav .links a:hover{opacity:1}
+.nav .cnt{font-size:13px;opacity:.7;white-space:nowrap;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 22px;border-radius:999px;border:0;font:500 16px/1 "Noto Sans SC",sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,[tabindex]:focus-visible,.logo:focus-visible{outline:3px solid #ffb703;outline-offset:3px}
+.btn.pri{background:var(--green);color:#fff}
+.btn.pri:hover{background:#17642f}
+.btn.sec{background:rgba(255,255,255,.9);color:var(--green);box-shadow:inset 0 0 0 2px var(--green)}
+.btn.sm{min-height:40px;padding:0 16px;font-size:14px}
+.snd svg{width:18px;height:18px}
+body.dark .nav{background:rgba(8,5,4,.84);color:#d8cdbd;border-color:rgba(255,255,255,.06)}
+body.dark .logo{color:#a11b12}
+body.dark .logo .leaf{display:none}body.dark .logo .hand{display:block}
+body.dark .btn.pri{background:#7d120c}
+body.dark .btn.sec{background:transparent;color:#d8cdbd;box-shadow:inset 0 0 0 2px #5a3a30}
+@media(max-width:860px){.nav .links,.nav .cnt{display:none}.nav .snd{margin-inline-start:auto}}
+@media(max-width:380px){.nav .snd span{display:none}}
+
+/* hero */
+.hero{min-height:100svh;padding:clamp(40px,8vh,96px) max(5vw,16px) 0;max-width:1240px;margin:0 auto}
+.hero h1{font:400 clamp(52px,10vw,112px)/1 "ZCOOL QingKe HuangYou",sans-serif;color:#0f4a25;margin:0 0 18px;letter-spacing:.02em;text-shadow:0 2px 0 rgba(255,255,255,.6)}
+.hero p.lead{font-size:clamp(17px,2vw,20px);max-width:30em;margin:0 0 26px;color:#163d26}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
+.stats{display:flex;flex-wrap:wrap;gap:12px 36px}
+.stats div{display:flex;flex-direction:column}
+.stats b{font:400 34px/1.1 "ZCOOL QingKe HuangYou",sans-serif;color:#0f4a25}
+.stats span{font-size:14px;color:#1d4a2c;font-weight:500}
+.hero .lead,.stats b,.stats span{text-shadow:0 0 4px #fff,0 0 10px #fff,0 0 18px rgba(255,255,255,.9)}
+
+/* bands */
+.band{padding:clamp(56px,8vw,112px) max(5vw,16px)}
+.in{max-width:1240px;margin:0 auto}
+h2{font:400 clamp(32px,5vw,52px)/1.1 "ZCOOL QingKe HuangYou","PingFang SC",sans-serif;margin:0 0 14px;text-wrap:balance}
+h3{line-height:1.35}
+.intro{font-size:17px;max-width:36em;margin:0 0 40px;opacity:.88}
+.sub{margin-top:clamp(64px,8vw,104px)}
+.a1{background:#fff;color:#12321f}.a1 h2{color:var(--green)}
+.a1b{background:#f1f9ec;color:#12321f}.a1b h2{color:var(--green)}
+.s2{background:#f3f7ec;color:#16301f}.s2 h2{color:#226b36}
+.s3{background:#f0ecdc;color:#2a2a1e}.s3 h2{color:#3f5a2c}
+.s4{background:#e6dfc6;color:#2e2a1f;background-image:radial-gradient(circle at 12% 30%,rgba(120,90,40,.12),transparent 18%),radial-gradient(circle at 85% 70%,rgba(100,70,30,.14),transparent 22%)}.s4 h2{color:#4d4a2a}
+.s5{background:#d3c8a8;color:#2b241a;background-image:radial-gradient(circle at 78% 18%,rgba(90,50,20,.22),transparent 16%),radial-gradient(circle at 20% 80%,rgba(70,60,20,.2),transparent 20%),radial-gradient(circle at 55% 52%,rgba(110,30,20,.1),transparent 9%)}.s5 h2{color:#4a3a22}
+.s6{background:#16110e;color:#d9cdbb}.s6 h2{color:#c9b9a2}
+.end{background:linear-gradient(rgba(5,3,3,.92),rgba(5,3,3,.35) 22%,rgba(5,3,3,.3) 75%,rgba(5,3,3,.92));color:#dccfbd;min-height:190vh;padding:clamp(80px,12vw,160px) max(5vw,16px) calc(40px + var(--sab))}
+.sk{display:inline-block;transform:rotate(11deg) translateY(2px)}
+
+/* act 1 */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
+.facts svg{width:56px;height:56px;margin-bottom:10px}
+.facts h3{font-size:20px;margin:0 0 6px}
+.facts p{margin:0;font-size:15.5px}
+@media(max-width:900px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.facts{grid-template-columns:1fr}}
+.progs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.prog{padding:26px 24px;border-radius:20px;background:#e6f4dc}
+.prog:nth-child(2){background:#fff4cf}.prog:nth-child(3){background:#dff1fb}
+.prog h3{font-size:22px;margin:0 0 4px}
+.prog .when{font-size:14px;font-weight:500;color:#2f6b3f;margin-bottom:10px}
+.prog p{margin:0}
+@media(max-width:860px){.progs{grid-template-columns:1fr}}
+.appbox{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:48px;align-items:center}
+.phone{border-radius:40px;background:#10291a;padding:14px;box-shadow:0 30px 60px -30px rgba(16,41,26,.6)}
+.screen{border-radius:28px;background:linear-gradient(#dff3ff,#f6fbf2 60%);padding:22px 18px 20px;text-align:center}
+.screen .t{font-size:14px;color:#2b5a3b;margin-bottom:4px}
+.screen h3{margin:0 0 6px;font-size:20px;color:#0f4a25}
+#sap{width:100%;height:190px;display:block}
+.screen .msg{font-size:14px;min-height:3.2em;color:#24452f;margin:6px 0 12px}
+.screen .row{display:flex;justify-content:center;gap:10px;align-items:center}
+.screen small{font-size:13px;color:#4b6b55}
+.feat{list-style:none;padding:0;margin:0;display:grid;gap:22px}
+.feat li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.feat svg{width:44px;height:44px}
+.feat b{display:block;font-size:18px}
+@media(max-width:760px){.appbox{grid-template-columns:1fr}.phone{max-width:340px;margin:0 auto;width:100%}}
+.seasons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-radius:20px;overflow:hidden}
+.seasons div{padding:26px 22px 28px;min-height:200px}
+.seasons div:nth-child(1){background:#d8f0c8}.seasons div:nth-child(2){background:#bfe6d6}.seasons div:nth-child(3){background:#ffe3a3}.seasons div:nth-child(4){background:#e3ecf2}
+.seasons b{display:block;font:400 40px/1 "ZCOOL QingKe HuangYou",sans-serif;color:#1d5a30;margin-bottom:10px}
+.seasons h3{margin:0 0 6px;font-size:18px}
+.seasons p{margin:0;font-size:15px}
+@media(max-width:860px){.seasons{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.birds{display:flex;flex-wrap:wrap;gap:12px}
+.bird{display:flex;gap:12px;align-items:center;padding:10px 18px 10px 10px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px #d6e9cc}
+.bird i{width:38px;height:38px;border-radius:50%;flex:none;background:var(--c)}
+.bird b{display:block;font-size:15px;line-height:1.3}
+.bird span{font-size:13px;opacity:.7;line-height:1.3;display:block}
+.news{list-style:none;padding:0;margin:0;max-width:860px}
+.news li{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid rgba(18,50,31,.12)}
+.news .src{font-size:14px;opacity:.7}
+.news b{font-size:18px;font-weight:500}
+@media(max-width:560px){.news li{grid-template-columns:1fr;gap:2px}}
+
+/* steps */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.steps li{border-top:3px solid #bfe3b6;padding-top:18px}
+.steps .n{font:400 56px/1 "ZCOOL QingKe HuangYou",sans-serif;color:#7fc56b}
+.steps h3{font-size:22px;margin:8px 0 6px}
+.steps p{margin:0;max-width:24em}
+.quote{margin:72px 0 0;padding:0;max-width:34em}
+.quote p{font:400 clamp(24px,3.4vw,34px)/1.35 "ZCOOL QingKe HuangYou",sans-serif;color:#1f7a3a;margin:0 0 10px}
+.quote cite{font-style:normal;font-size:15px;opacity:.7}
+@media(max-width:760px){.steps{grid-template-columns:1fr;gap:28px}}
+
+/* impact */
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-bottom:56px}
+.figs div{border-top:2px solid #226b36;padding-top:12px}
+.figs b{display:block;font:400 clamp(36px,4.6vw,54px)/1.05 "ZCOOL QingKe HuangYou",sans-serif;color:#226b36;white-space:nowrap}
+.figs span{display:block;font-size:15px;margin-top:4px}
+.figs small{display:block;font-size:13px;opacity:.65;margin-top:6px}
+@media(max-width:860px){.figs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.chart{max-width:760px}
+.chart h3{font-size:19px;margin:0 0 16px}
+.bar{display:grid;grid-template-columns:7.5em minmax(0,1fr) 4em;align-items:center;gap:12px;margin-bottom:12px;font-size:15px}
+.bar i{display:block;height:26px;border-radius:4px;background:#9fcf8a;transition:width 1s}
+.bar.hi i{background:#226b36}
+.bar em{font-style:normal;text-align:right;white-space:nowrap;font-weight:700}
+.note-s{font-size:13px;opacity:.65;margin-top:10px}
+.partners{margin-top:64px;display:flex;flex-wrap:wrap;gap:14px 34px;align-items:baseline}
+.partners h3{font-size:15px;margin:0;opacity:.6;font-weight:500;width:100%}
+.partners span{font-size:17px;font-weight:700;opacity:.55}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:40px;align-items:center;max-width:980px}
+.calc label{display:block;font-size:15px;margin-bottom:8px}
+.calc .kg{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+.calc .kg input{width:5.5em;font-size:28px;font-weight:700;padding:6px 12px;border-radius:10px;border:2px solid #9aab6a;background:#fffdf4;color:#2a2a1e;min-height:52px}
+.calc input[type=range]{width:100%;accent-color:#3f5a2c;min-height:44px}
+.res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.res b{display:block;font:400 clamp(34px,4.4vw,50px)/1.05 "ZCOOL QingKe HuangYou",sans-serif;color:#3f5a2c;white-space:nowrap}
+.res span{font-size:14px}
+#cwarn{grid-column:1/-1;font-size:15px;color:#7a4a12;min-height:1.6em;margin:0}
+@media(max-width:760px){.calc{grid-template-columns:1fr}.res{grid-template-columns:1fr 1fr}}
+
+/* testimonials */
+.quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.quotes blockquote{margin:0}
+.quotes p{font-size:17.5px;line-height:1.8;margin:0 0 14px}
+.quotes p::before{content:"“";display:block;font:400 64px/.6 "ZCOOL QingKe HuangYou",sans-serif;color:#9aab6a;margin-bottom:10px}
+.quotes cite{font-style:normal;font-size:14px;opacity:.7}
+@media(max-width:900px){.quotes{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.quotes{grid-template-columns:1fr}}
+
+/* jobs, menu */
+.jobs{max-width:900px}
+.job{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 24px;align-items:center;padding:20px 0;border-bottom:1px solid rgba(60,60,30,.2)}
+.job h3{margin:0;font-size:20px}
+.job p{margin:4px 0 0;font-size:15.5px;max-width:36em}
+.job .pay{font-size:14px;opacity:.7;margin-top:4px}
+.job .btn{background:#3f5a2c;color:#fff}
+.job .done{grid-column:1/-1;font-size:14px;color:#5a4a12;margin:0}
+@media(max-width:600px){.job{grid-template-columns:1fr}.job .btn{justify-self:start}}
+.menu{max-width:760px;border-radius:14px;background:#fffaf0;padding:26px clamp(18px,4vw,34px);box-shadow:inset 0 0 0 1px #e2d6b0}
+.menu h3{font:400 28px/1.2 "ZCOOL QingKe HuangYou",sans-serif;text-align:center;margin:0 0 4px;color:#6a4a1a}
+.menu .c{text-align:center;font-size:14px;opacity:.7;margin:0 0 18px}
+.meal{display:grid;grid-template-columns:4.2em 4em minmax(0,1fr);gap:12px;padding:12px 0;border-top:1px dashed #d9c9a0;font-size:16px}
+.meal time{font-weight:700;color:#6a4a1a;white-space:nowrap}
+.meal span:nth-child(2){font-weight:500}
+.menu .foot{font-size:14px;margin:16px 0 0;text-align:center;opacity:.8}
+
+/* windows into the forest */
+.win{height:82vh;display:flex;align-items:flex-end;padding:0 max(5vw,16px) 30px}
+.win span{display:inline-block;max-width:30em;background:rgba(10,10,8,.55);color:#f2ead8;padding:10px 16px;border-radius:8px;font-size:15px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+
+/* tags */
+.tags{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:34px 26px;padding-top:20px}
+.tag{position:relative;padding:34px 20px 20px;border-radius:10px 10px 14px 14px;color:#3a2514;background:repeating-linear-gradient(92deg,rgba(0,0,0,0) 0 7px,rgba(60,30,10,.07) 7px 9px),linear-gradient(#cfa36a,#b88648);box-shadow:0 2px 0 #8a5d2c,0 10px 18px -12px rgba(60,30,0,.6);transform:rotate(var(--r,0deg))}
+.tag::before{content:"";position:absolute;top:12px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#e6dfc6;box-shadow:inset 0 2px 2px rgba(0,0,0,.4)}
+.tag::after{content:"";position:absolute;top:-22px;left:50%;width:2px;height:36px;background:#7a6a4a;transform:rotate(8deg)}
+.tag .no{font-size:13px;opacity:.75}
+.tag h3{font-size:24px;margin:2px 0 2px;letter-spacing:.06em}
+.tag .sp{font-size:14px}
+.tag dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:14px;margin:10px 0}
+.tag dt{opacity:.7}.tag dd{margin:0;white-space:nowrap}
+.tag p{font-size:14px;margin:0;border-top:1px dashed rgba(58,37,20,.35);padding-top:8px}
+.tag.blank{background:transparent;box-shadow:inset 0 0 0 2px #a48a5c}
+.tag.blank::before{background:#a48a5c}
+.tag.blank h3{color:#8a7448}
+
+/* diary */
+.diary{max-width:720px;margin:0 auto;background:repeating-linear-gradient(#fbf7e8 0 33px,#d9d2b8 33px 34px);border-radius:6px;padding:28px clamp(18px,5vw,48px) 36px clamp(40px,8vw,72px);position:relative;box-shadow:0 20px 40px -24px rgba(60,40,10,.6);color:#2c2a26}
+.diary::before{content:"";position:absolute;left:clamp(26px,5vw,52px);top:0;bottom:0;width:2px;background:#e3a6a0}
+.entry{margin-bottom:30px;line-height:34px;font-size:17px}
+.entry time{display:block;font-weight:700;font-size:15px;color:#5a4a3a}
+.entry p{margin:0}
+.entry.last p{font:400 clamp(26px,4vw,32px)/1.3 "Zhi Mang Xing","Kaiti SC",cursive;color:#3a3028;transform:rotate(-2deg)}
+.entry.last .x{color:#8b1a10;text-decoration:line-through;text-decoration-thickness:3px}
+
+/* calendar reprise */
+.cal{list-style:none;padding:0;margin:0;display:grid;gap:0;max-width:900px}
+.cal li{display:grid;grid-template-columns:5em minmax(0,1fr);gap:20px;padding:18px 0;border-bottom:1px solid rgba(60,50,30,.22)}
+.cal b{font:400 34px/1 "ZCOOL QingKe HuangYou",sans-serif;color:#7b6a3c}
+.cal h3{margin:0 0 4px;font-size:19px}
+.cal p{margin:0}
+
+/* map */
+.mapbox{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;align-items:start}
+#map{width:100%;height:auto;display:block;border-radius:14px;background:#e9e2c8;box-shadow:inset 0 0 0 1px rgba(80,60,20,.25)}
+#map .z{cursor:pointer;outline:none}
+#map .z path{transition:filter .2s}
+#map .z:hover path,#map .z:focus-visible path,#map .z.on path{filter:brightness(1.18);stroke:#2b241a;stroke-width:2.5}
+#map text{font:600 15px "Noto Sans SC",sans-serif;pointer-events:none}
+.mapinfo{border-radius:14px;background:rgba(255,250,235,.7);padding:22px;min-height:180px;box-shadow:inset 0 0 0 1px rgba(80,60,20,.2)}
+.mapinfo h3{margin:0 0 4px;font-size:22px}
+.mapinfo .st{display:inline-block;font-size:13px;padding:2px 10px;border-radius:999px;background:#2f6b3f;color:#fff;margin-bottom:10px}
+.mapinfo p{margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;margin-top:12px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+@media(max-width:760px){.mapbox{grid-template-columns:1fr}}
+
+/* live cam */
+.cam{position:relative;max-width:900px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#0b120d}
+.cam svg{position:absolute;inset:0;width:100%;height:100%}
+.cam::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(rgba(0,0,0,.18) 0 2px,transparent 2px 4px),radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.7))}
+.cam .hud{position:absolute;inset:0;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;font:500 13px/1.4 ui-monospace,Menlo,monospace;color:#cfe8d0;text-shadow:0 1px 2px #000;pointer-events:none;z-index:2}
+.cam .hud .r{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.cam .live{color:#ff4a3a}
+.cam.gl svg{transform:translateX(-6px) skewX(4deg);filter:hue-rotate(80deg) contrast(1.6)}
+.camcap{font-size:14px;opacity:.75;margin-top:10px;max-width:900px}
+
+/* rules */
+.rules{counter-reset:r;list-style:none;padding:0;margin:0;max-width:760px}
+.rules li{counter-increment:r;display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:12px;padding:16px 0;border-bottom:1px solid rgba(60,50,30,.25);font-size:18px}
+.rules li::before{content:counter(r);font:400 32px/1 "ZCOOL QingKe HuangYou",sans-serif;color:#7b6a3c}
+.scrawl{font:400 clamp(24px,3vw,30px)/1.2 "Zhi Mang Xing","Kaiti SC","STKaiti",cursive;color:#8b1a10;display:block;transform:rotate(var(--r,-3deg));margin:6px 0 0;opacity:.92}
+.rules .scrawl{grid-column:2}
+
+/* comments */
+.wall{max-width:760px}
+.cm{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding:16px 0;border-bottom:1px solid rgba(60,40,20,.2)}
+.cm .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;background:var(--c,#7b8a5a)}
+.cm .who{font-size:14px;font-weight:700}
+.cm .who small{font-weight:400;opacity:.65;margin-inline-start:8px}
+.cm .who em{font-style:normal;font-size:12px;font-weight:500;padding:1px 8px;border-radius:999px;background:#5a3a22;color:#f0e2c8;margin-inline-start:6px}
+.cm p{margin:2px 0 4px;font-size:16.5px}
+.cm p.del{opacity:.5;font-style:italic}
+.cm .lk{font-size:13px;opacity:.6}
+.cm .reply{margin:8px 0 0;padding:10px 14px;border-radius:10px;background:rgba(255,250,235,.55);font-size:15px}
+.post{display:grid;gap:10px;margin-top:22px}
+.post textarea{font:16px "Noto Sans SC",sans-serif;min-height:90px;padding:12px 14px;border-radius:10px;border:1px solid #8a7a58;background:#f3ecd6;color:#2b241a;resize:vertical}
+.post .btn{justify-self:start;background:#4a3a22;color:#f3e7d6}
+
+/* faq, tos */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid rgba(60,40,20,.3)}
+.faq summary{list-style:none;cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:19px;font-weight:500;padding:12px 0}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:26px;line-height:1;transition:transform .3s;flex:none}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 18px;font-size:17px;max-width:38em}
+.tos{max-width:760px;height:340px;overflow-y:auto;border-radius:10px;background:#f7f1de;color:#3a3226;padding:20px 22px;font-size:14px;line-height:1.75;box-shadow:inset 0 0 0 1px #b9a77c}
+.tos h3{font-size:16px;margin:0 0 10px;text-align:center}
+.tos p{margin:0 0 12px}
+.tos .hot{background:rgba(139,26,16,.12)}
+.agree{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:15px}
+.agree input{width:22px;height:22px;accent-color:#5a3a22}
+
+/* form */
+form#form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px;max-width:820px}
+.f{display:flex;flex-direction:column;gap:6px;font-size:15px}
+.f.w{grid-column:1/-1}
+.f small{font-size:13px;opacity:.6}
+.s6 input,.s6 select{font:16px "Noto Sans SC",sans-serif;min-height:48px;padding:10px 14px;border-radius:8px;border:1px solid #4a3a30;background:#0d0907;color:#e8dccb}
+.radios{display:flex;gap:24px;min-height:48px;align-items:center}
+.radios label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.radios input{min-height:auto!important;width:20px;height:20px;accent-color:#7d120c}
+form#form .btn{justify-self:start;background:#7d120c;color:#f3e7d6}
+#ok{grid-column:1/-1;font-size:19px;line-height:1.7;color:#e7b9a6;min-height:1em}
+@media(max-width:600px){form#form{grid-template-columns:1fr}}
+
+/* end */
+.end .in{max-width:860px}
+.end h2{font-size:clamp(46px,9vw,96px);color:#b3160f;margin-bottom:28px;animation:shake 4s infinite}
+@keyframes shake{0%,91%,100%{transform:none}92%{transform:translate(2px,-1px) skewX(-3deg)}94%{transform:translate(-3px,1px)}96%{transform:translate(1px,2px) skewX(2deg)}}
+.end p{font-size:clamp(18px,2.2vw,22px);line-height:1.85;max-width:30em;margin:0 0 26px;text-shadow:0 1px 8px #000}
+.end p b{color:#e7553f;font-weight:500;white-space:nowrap}
+.gap{height:30vh}
+.spell{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 30px}
+.spell span{font:400 clamp(56px,12vw,112px)/1 "ZCOOL QingKe HuangYou",sans-serif;color:#e8dccb;opacity:0;transform:rotate(11deg) translateY(30px);transition:opacity 1s,transform 1s}
+.spell.on span{opacity:1;transform:rotate(var(--r)) translateY(0)}
+.plate{max-width:420px;margin:0 0 30px;padding:26px 26px 22px;border-radius:6px;background:linear-gradient(135deg,#9c9890,#5f5c57 45%,#86827b);color:#1a1715;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 20px 40px -10px #000;font-size:15px;position:relative}
+.plate::before,.plate::after{content:"";position:absolute;top:10px;width:9px;height:9px;border-radius:50%;background:#2a2724;box-shadow:inset 0 1px 1px #000}
+.plate::before{left:10px}.plate::after{right:10px}
+.plate b{display:block;font:400 34px/1.1 "ZCOOL QingKe HuangYou",sans-serif;letter-spacing:.05em;margin:4px 0 8px;color:#1a1715;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+.plate .rust{position:absolute;inset:0;border-radius:6px;background:radial-gradient(circle at 80% 85%,rgba(120,20,10,.55),transparent 30%),radial-gradient(circle at 10% 90%,rgba(90,40,10,.45),transparent 25%);pointer-events:none}
+#cancel{background:transparent;color:#dccfbd;box-shadow:inset 0 0 0 2px #6b1d14}
+#cancel.shk{animation:shake .6s 2}
+#cmsg{font-size:19px;color:#e7553f;min-height:1.8em;margin:14px 0 0}
+.final{font:400 clamp(34px,6vw,64px)/1.2 "Zhi Mang Xing","Kaiti SC",cursive;color:#c21d12;margin:26vh 0 22vh;transform:rotate(-2deg);text-shadow:0 0 18px rgba(200,20,10,.35)}
+footer{font-size:13px;opacity:.55;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;display:flex;flex-wrap:wrap;gap:6px 24px}
+
+/* secret file */
+#secret{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:20px}
+#secret.on{display:flex}
+#secret .doc{max-width:520px;width:100%;max-height:80vh;overflow:auto;background:#efe8d4;color:#231d14;padding:28px 26px;border-radius:4px;font-size:15.5px;line-height:1.8;box-shadow:0 30px 60px #000;transform:rotate(-1deg)}
+#secret .stamp{display:inline-block;border:3px solid #a3170e;color:#a3170e;padding:2px 12px;font-weight:700;transform:rotate(-6deg);margin-bottom:12px}
+#secret .bl{background:#231d14;color:#231d14}
+#secret .btn{margin-top:14px;background:#231d14;color:#efe8d4}
+
+.w{transition:none}
+.w.f{color:#9c140c}
+.blink{transform-box:fill-box;transform-origin:center;animation:bl 5s infinite}
+@keyframes bl{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.08)}}
+@media (prefers-reduced-motion:reduce){.grain,.vig,.end h2,.blink,#cancel.shk,#splash i::after{animation:none}html{scroll-behavior:auto}.spell span{transition:none}}
+</style>
+</head>
+<body>
+<div id="splash" aria-hidden="true">
+  <svg viewBox="0 0 32 32"><path d="M16 30V15" stroke="#1f7a3a" stroke-width="2.4" stroke-linecap="round"/><path d="M16 17C9 17 5 12 5 5c7 0 11 4 11 12z" fill="#3fa34d"/><path d="M16 14c0-6 4-10 11-10 0 7-4 10-11 10z" fill="#7fc56b"/></svg>
+  <b>归林</b>
+  <p id="splashmsg">正在寻找你附近的林区…</p>
+  <i></i>
+</div>
+<div id="scene" aria-hidden="true"><svg id="sv"></svg></div>
+<div class="vig" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <button class="logo" id="logo" type="button" aria-label="归林计划">
+    <svg class="leaf" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30V15" stroke="#1f7a3a" stroke-width="2.4" stroke-linecap="round"/><path d="M16 17C9 17 5 12 5 5c7 0 11 4 11 12z" fill="#3fa34d"/><path d="M16 14c0-6 4-10 11-10 0 7-4 10-11 10z" fill="#7fc56b"/></svg>
+    <svg class="hand" viewBox="0 0 32 32" aria-hidden="true"><g stroke="#a11b12" stroke-linecap="round" fill="none"><path d="M16 31V19" stroke-width="4"/><path d="M12 19 9 8M15 18 14 4M18 18 19 4M21 19 24 8M21 22l6-5" stroke-width="2.4"/></g></svg>
+    <span><span id="brand">归林</span>计划</span>
+  </button>
+  <nav class="links" aria-label="主导航">
+    <a href="#why">为什么种树</a><a href="#join-ways">参与</a><a href="#app">App</a><a href="#impact">成果</a><a href="#map-s">林区地图</a><a href="#faq">问答</a>
+  </nav>
+  <span class="cnt">已有 <span class="cntn">12,408</span> 位<span class="w" data-t="肥料">志愿者</span></span>
+  <button class="btn sec sm snd" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8v4h3l4 3V5L6 8z" fill="currentColor"/><path d="M13 7a4 4 0 0 1 0 6M15 5a7 7 0 0 1 0 10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span>聆听森林</span></button>
+  <a class="btn pri sm" href="#join">报名</a>
+</header>
+
+<main id="top">
+<!-- ============ 第一幕：一个普通的环保项目 ============ -->
+  <section class="hero" data-p="0">
+    <h1>让城市<br>重新呼吸</h1>
+    <p class="lead">归林计划是绿洲市的城市再生公益项目。过去两年，<span class="sk">我</span>们和市民一起，在废弃厂区、河滩和老城区种下了一万多棵树。下一棵，想和你一起种。</p>
+    <div class="cta">
+      <a class="btn pri" href="#join-ways">看看怎么参与</a>
+      <button class="btn sec snd" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8v4h3l4 3V5L6 8z" fill="currentColor"/><path d="M13 7a4 4 0 0 1 0 6M15 5a7 7 0 0 1 0 10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><span>聆听森林</span></button>
+    </div>
+    <div class="stats">
+      <div><b class="cntn">12,408</b><span>棵新树</span></div>
+      <div><b>3</b><span>片城市林区</span></div>
+      <div><b>98%</b><span>树苗成活率</span></div>
+    </div>
+  </section>
+
+  <section class="band a1" id="why" data-p="0">
+    <div class="in">
+      <h2>一棵树，能为城市做多少事</h2>
+      <p class="intro">树不会说话，但它<span class="sk">们</span>一直在替我们做事。这些改变，你每天走在路上都能感受到。</p>
+      <div class="facts">
+        <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#fff1c2"/><circle cx="28" cy="24" r="9" fill="#ffc83a"/><path d="M14 40h28" stroke="#3fa34d" stroke-width="4" stroke-linecap="round"/></svg><h3>给街道降温</h3><p>夏天，树荫下的路面温度可以比暴晒处低十几度。行道树多的街区，傍晚明显更凉快。</p></div>
+        <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#dff1fb"/><path d="M28 14c6 9 9 14 9 19a9 9 0 0 1-18 0c0-5 3-10 9-19z" fill="#4aa8d8"/></svg><h3>接住雨水</h3><p>树冠和根系能截住一部分雨水，让暴雨来得慢一点，下水道也不那么容易漫出来。</p></div>
+        <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#e6f4dc"/><path d="M18 34c4-8 8-8 10 0s6 8 10 0" stroke="#2f8a3e" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg><h3>挡住噪音</h3><p>成排的树能吸收和散射一部分车流声。住在林荫道旁边的人，夜里会睡得安稳一些。</p></div>
+        <div><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#ffe3e0"/><path d="M28 40s-12-7-12-15a6 6 0 0 1 12-2 6 6 0 0 1 12 2c0 8-12 15-12 15z" fill="#f06b5a"/></svg><h3>让人放松</h3><p>不少研究发现，经常在树多的地方散步，人会更放松、睡得更好。哪怕只是窗外有一棵树。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band a1b" id="join-ways" data-p="0.01">
+    <div class="in">
+      <h2>三种参与方式，总有一种适合你</h2>
+      <p class="intro">不需要任何经验。带上家人朋友，或者一个人来也很好。</p>
+      <div class="progs">
+        <div class="prog"><h3>社区植树日</h3><div class="when">每月第一个周六 上午 9:00</div><p>在指定林区集合，工具、手套和树苗<span class="sk">都</span>由我们准备。你只需要穿一双不怕脏的鞋，再带一瓶水。</p></div>
+        <div class="prog"><h3>认养一棵树</h3><div class="when">随时开始</div><p>选一棵你喜欢的树，挂上写着你名字的铭牌。App 会提醒你什么时候该浇水，也会记录它每个月长高了多少。</p></div>
+        <div class="prog"><h3>林区巡护</h3><div class="when">周末 7:00–9:00</div><p>沿步道巡查两小时，记录鸟类、清理垃圾、检查新树的支架。适合喜欢安静、愿意早起的人。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band a1" id="app" data-p="0.02">
+    <div class="in">
+      <h2>把树带回口袋里</h2>
+      <p class="intro">归林 App 是你和树之间的联络本。试试看，给这棵小树苗浇点水。</p>
+      <div class="appbox">
+        <div class="phone"><div class="screen">
+          <div class="t">我的树 · 第一林区 A-17</div>
+          <h3 id="sapname">小香樟</h3>
+          <svg id="sap" viewBox="0 0 200 190" aria-label="一棵小树苗"></svg>
+          <p class="msg" id="sapmsg" aria-live="polite">刚种下的小树苗，还有点害羞。</p>
+          <div class="row"><button class="btn pri" id="water" type="button">浇水</button><small>已浇水 <b id="wn">0</b> 次</small></div>
+        </div></div>
+        <ul class="feat">
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#dff1fb"/><path d="M22 10c5 7 7 11 7 15a7 7 0 0 1-14 0c0-4 2-8 7-15z" fill="#4aa8d8"/></svg><div><b>浇水提醒</b>根据天气和土壤湿度，告诉你今天要不要去看看它。</div></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#e6f4dc"/><path d="M14 32V20M22 32V14M30 32V24" stroke="#2f8a3e" stroke-width="4" stroke-linecap="round"/></svg><div><b>生长日记</b>每个月自动记录树高和冠幅，一年后回头看，会很有成就感。</div></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#fff4cf"/><path d="M22 34s-9-9-9-15a9 9 0 0 1 18 0c0 6-9 15-9 15z" fill="#f0a030"/><circle cx="22" cy="19" r="3.5" fill="#fff"/></svg><div><b>林区地图</b>查看每片林区的开放时间、步道和洗手间位置。</div></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#ffe3e0"/><path d="M12 26c6-1 9-7 16-7 3 0 5 2 5 4l-5 1c-2 5-8 7-16 2z" fill="#6b5a4a"/><circle cx="30" cy="22" r="1.2" fill="#fff"/></svg><div><b>鸟类图鉴</b>拍下你遇到的鸟，App 帮你认出它是谁。</div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band a1b" data-p="0.03">
+    <div class="in">
+      <h2>林区四季</h2>
+      <p class="intro">每个季节，林区都有不一样的事情可以做。</p>
+      <div class="seasons">
+        <div><b>春</b><h3>植树节</h3><p>三月土壤刚解冻，是种树最好的时候。每年这时候报名的人最多。</p></div>
+        <div><b>夏</b><h3>萤火虫之夜</h3><p>六月的晚上，第二林区的溪边会有萤火虫。记得带驱蚊水。</p></div>
+        <div><b>秋</b><h3>银杏节</h3><p>十一月，河滩那条银杏大道会铺满金色的落叶，很适合拍照。</p></div>
+        <div><b>冬</b><h3>护树行动</h3><p>给新树裹上草绳、刷上白漆。小树<span class="sk">还</span>很怕冷，需要人帮它过冬。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band a1" data-p="0.045">
+    <div class="in">
+      <h2>林区里的邻居</h2>
+      <p class="intro">上个月，巡护志愿者在三片林区一共记录到 43 种鸟。下面是最常见的几位。</p>
+      <div class="birds" id="birds"></div>
+    </div>
+  </section>
+
+  <section class="band a1b" data-p="0.06">
+    <div class="in">
+      <h2>媒体报道</h2>
+      <ul class="news">
+        <li><span class="src">绿洲日报<br>2025 年 4 月</span><b>废弃纺织厂变身城市森林，周边居民：“终于有地方散步了”</b></li>
+        <li><span class="src">城市周刊<br>2025 年 9 月</span><b>归林计划：一场市民自发的绿化<span class="sk">活</span>动</b></li>
+        <li><span class="src">绿洲电视台<br>2026 年 3 月</span><b>植树节，三百多名市民走进第一林区</b></li>
+        <li><span class="src">环境观察<br>2026 年 6 月</span><b>归林林区树木生长速度远超预期，专家称“土壤条件罕见”</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="win" data-p="0.08"><span>第一林区，三月。植树日来了两百多人，大家都弄了一身泥。</span></div>
+
+<!-- ============ 第二幕：有点不对 ============ -->
+  <section class="band s2" id="impact" data-p="0.11">
+    <div class="in">
+      <h2>看得见的改变</h2>
+      <p class="intro">项目启动两年，第三林区的树木生长速度达到了全国平均水平的三倍。每一个数字背后，都站<span class="sk">着</span>一位真实的市民。</p>
+      <div class="figs">
+        <div><b>12,408</b><span>棵新树</span><small>与驻林志愿者人数一一对应</small></div>
+        <div><b>4,120 吨</b><span>年二氧化碳吸收量</span></div>
+        <div><b>61.7 kg</b><span>每位驻林志愿者的平均贡献</span><small>按入林时体重计</small></div>
+        <div><b>100%</b><span>志愿者满意度</span><small>至今未收到任何一位驻林志愿者的投诉</small></div>
+      </div>
+      <div class="chart">
+        <h3>不同养护方式下，香樟的年增高</h3>
+        <div class="bar"><span>化肥</span><i style="width:22%"></i><em>0.6 m</em></div>
+        <div class="bar"><span>有机堆肥</span><i style="width:33%"></i><em>0.9 m</em></div>
+        <div class="bar hi"><span>驻林志愿者</span><i style="width:100%"></i><em>2.7 m</em></div>
+        <p class="note-s">数据来源：第三林区年度监测，样本 12,408 棵，每棵树下各一位志愿者。</p>
+      </div>
+      <div class="partners">
+        <h3>合作伙伴</h3>
+        <span>绿洲市园林局</span><span>绿洲市第三人民医院</span><span>松鹤安养中心</span><span>顺风单程客运</span><span>永安殡葬服务</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band s2" data-p="0.15" style="padding-top:0">
+    <div class="in">
+      <h2>想做得更多？试试“深度参与”</h2>
+      <p class="intro">对一部分市民来说，每月种一次树还不够。深度参与计划，让你和树的关系更近一步。</p>
+      <ol class="steps">
+        <li><div class="n">1</div><h3>在线报名</h3><p>填写一份简单的信息表。我们只需要知道你的身高、体重和住址。</p></li>
+        <li><div class="n">2</div><h3>上门评估</h3><p>专业团队会到你家做一次简短的评估，确认你的有机质含量与氮、磷、钾比例适合本地土壤。</p></li>
+        <li><div class="n">3</div><h3>入林<span class="w" data-t="下葬">扎根</span></h3><p>专车接送（单程），前往林区与树苗一同扎根。无需携带任何物品，包括手机。</p></li>
+      </ol>
+      <blockquote class="quote">
+        <p>“人从土里来，也该回到土里去。我们只是让这件事变得更环保一点。”</p>
+        <cite>林守根，归林计划发起人</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="band s3" data-p="0.19">
+    <div class="in">
+      <h2>算一算你的贡献</h2>
+      <p class="intro">输入你的体重，看看你能为城市带来多少改变。</p>
+      <div class="calc">
+        <div>
+          <label for="kg">你的体重</label>
+          <div class="kg"><input id="kg" type="number" inputmode="numeric" min="30" max="150" value="65"><span>kg</span></div>
+          <input id="kgr" type="range" min="30" max="150" value="65" aria-label="体重滑块">
+        </div>
+        <div class="res">
+          <div><b id="r1">2.8 m</b><span>可以让一棵香樟多长的高度</span></div>
+          <div><b id="r2">351 kg</b><span>每年多吸收的二氧化碳</span></div>
+          <div><b id="r3">3 户</b><span>夏天能多一片树荫的家庭</span></div>
+          <p id="cwarn"></p>
+        </div>
+      </div>
+      <p class="note-s">计算基于第三林区驻林志愿者的实测数据。体重越大，贡献越大。</p>
+    </div>
+  </section>
+
+  <section class="band s3" data-p="0.23" style="padding-top:0">
+    <div class="in">
+      <h2>家属的话</h2>
+      <p class="intro">每一棵树都连着一个家庭。下面是他们想对你说的话。</p>
+      <div class="quotes">
+        <blockquote><p>爸爸去年参加了归林计划。妈妈说他变成了一棵树。我每天放学都去给他浇水。昨天他的叶子动了一下，可是那天没有风。</p><cite>朵朵，8 岁，家属</cite></blockquote>
+        <blockquote><p>我先生总说上班太累，想好好休息。现在他终于能一直安静下去了。邻居都夸我们家门口那棵樟树长得好，夏天特别凉快。</p><cite>王女士，家属</cite></blockquote>
+        <blockquote><p>老伴走之前说，不想进骨灰盒，太闷了。现在她在第二林区，是一棵很高的银杏。我每个礼拜去坐一会儿，跟她聊聊天。有时候她也回我。</p><cite>老周，68 岁，家属</cite></blockquote>
+        <blockquote><p>巡护的时候我最喜欢第三林区，特别安静，连鸟都不叫。就是那里的树好像总在我背后换位置，可能是我记错了。</p><cite>小林，24 岁，巡护志愿者</cite></blockquote>
+        <blockquote><p>我已经报名了，下周三入林。工作人员说一点都不疼，就像睡着一样。说实话有点紧张，但能为城市做点事，值得。</p><cite>陈立，32 岁，即将入林</cite></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="band s3" id="jobs" data-p="0.27" style="padding-top:0">
+    <div class="in">
+      <h2>加入我们</h2>
+      <p class="intro">归林计划正在招聘以下岗位。五险一金，包食宿，林区内工作。</p>
+      <div class="jobs" id="joblist"></div>
+    </div>
+  </section>
+
+  <section class="band s3" data-p="0.31" style="padding-top:0">
+    <div class="in">
+      <h2>丰收计划</h2>
+      <p class="intro">有些报名者因为体重偏轻，暂时没能通过评估。别担心，我们会照顾你。</p>
+      <div class="menu">
+        <h3>丰收计划 · 每日食谱</h3>
+        <p class="c">由归林营养师团队定制</p>
+        <div class="meal"><time>07:00</time><span>早餐</span><span>红糖小米粥、猪油拌面、两个咸鸭蛋</span></div>
+        <div class="meal"><time>10:00</time><span>加餐</span><span>黄油面包、全脂牛奶 500 ml</span></div>
+        <div class="meal"><time>12:00</time><span>午餐</span><span>红烧肉、东坡肘子、米饭三碗</span></div>
+        <div class="meal"><time>15:30</time><span>加餐</span><span>桃酥、蜂蜜蛋糕</span></div>
+        <div class="meal"><time>18:00</time><span>晚餐</span><span>炖猪蹄、腊肠饭、肥肠粉</span></div>
+        <div class="meal"><time>22:00</time><span>夜宵</span><span>工作人员会送到你床边，看着你吃完</span></div>
+        <p class="foot">每日约 6,000 千卡，一直供应到你准备好为止。<br>已有 836 位学员顺利毕业，全部入林。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="win" data-p="0.35"><span>第三林区，六月。树苗长得很好，土壤也比去年肥沃。</span></div>
+
+<!-- ============ 第三幕：不对劲 ============ -->
+  <section class="band s4" id="adopt" data-p="0.39">
+    <div class="in">
+      <h2>认养一棵树</h2>
+      <p class="intro">每棵树都有自己的名字。你可以为它挂上铭牌、定期<span class="w" data-t="扫墓">探访</span>，或者只是记住它。</p>
+      <div class="tags">
+        <article class="tag" style="--r:-1.5deg"><div class="no">No. 0417</div><h3>林国栋</h3><div class="sp">樟树</div><dl><dt>入林</dt><dd>2025-03-12</dd><dt>入林时</dt><dd>1.74 m</dd><dt>现高</dt><dd>6.2 m</dd></dl><p>喜欢晒太阳。请勿在树下大声喧哗，它会醒。</p></article>
+        <article class="tag" style="--r:1deg"><div class="no">No. 1022</div><h3>苏婉清</h3><div class="sp">银杏</div><dl><dt>入林</dt><dd>2025-06-02</dd><dt>入林时</dt><dd>1.61 m</dd><dt>现高</dt><dd>4.8 m</dd></dl><p>秋天叶子会变成金色，那是她生前最喜欢的颜色。</p></article>
+        <article class="tag" style="--r:-.5deg"><div class="no">No. 3310</div><h3>林家三口</h3><div class="sp">榕树（家庭树）</div><dl><dt>入林</dt><dd>2025-09-19</dd><dt>根系</dt><dd>14 m</dd><dt>树冠</dt><dd>全区最茂密</dd></dl><p>气根会慢慢垂到地面，像在找什么人。</p></article>
+        <article class="tag" style="--r:1.5deg"><div class="no">No. 5521</div><h3>周秀兰</h3><div class="sp">银杏</div><dl><dt>入林</dt><dd>2025-11-08</dd><dt>入林时</dt><dd>1.58 m</dd><dt>现高</dt><dd>5.0 m</dd></dl><p>每周六上午，有位老先生会来树下坐一会儿。</p></article>
+        <article class="tag" style="--r:2deg"><div class="no">No. 8806</div><h3>赵一鸣</h3><div class="sp">水杉</div><dl><dt>入林</dt><dd>2026-02-27</dd><dt>入林时</dt><dd>1.80 m</dd><dt>现高</dt><dd>3.1 m</dd></dl><p>树干温度常年保持在 36.5 °C。</p></article>
+        <article class="tag" style="--r:-1deg"><div class="no">No. 10233</div><h3>无名氏</h3><div class="sp">香樟</div><dl><dt>入林</dt><dd>2026-07-15</dd><dt>来源</dt><dd>不明</dd></dl><p>没有人登记过这棵树。它是自己长出来的。</p></article>
+        <article class="tag" style="--r:-2deg"><div class="no">No. 12408</div><h3>陈立</h3><div class="sp">香樟</div><dl><dt>入林</dt><dd>2026-11-25</dd><dt>状态</dt><dd>已预约</dd></dl><p>坑已经挖好了。</p></article>
+        <article class="tag blank" style="--r:1deg"><div class="no">No. 12409</div><h3 id="tagname">待认领</h3><div class="sp">香樟</div><dl><dt>入林</dt><dd>尚未确定</dd></dl><p>这棵树还没有名字。也许是你。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band s4" data-p="0.43" style="padding-top:0">
+    <div class="in">
+      <h2>志愿者日记：入林前的七天</h2>
+      <p class="intro">陈立是我们第 12,408 位深度参与志愿者。在他的同意下，我们节选了他入林前一周的日记。</p>
+      <div class="diary">
+        <div class="entry"><time>11 月 18 日　周三　晴</time><p>报名成功了！工作人员打电话来，声音很温柔，问了我很多问题：一个人住吗？平时有没有人来看我？我说没有。她好像很高兴。</p></div>
+        <div class="entry"><time>11 月 19 日　周四　多云</time><p>评估的人来了，两个，都穿白大褂。他们没有量血压，量的是我的大腿、腰和上臂，一边量一边念数字，另一个在本子上记。走的时候其中一个拍了拍我的肚子，说：“不错。”</p></div>
+        <div class="entry"><time>11 月 20 日　周五　阴</time><p>评估结果出来了，说我“略偏瘦”，要先参加丰收计划。今天开始送饭，一天六顿。红烧肉真的很好吃。</p></div>
+        <div class="entry"><time>11 月 21 日　周六　阴</time><p>吃不下了。但送饭的人一直站在门口，等我吃完。我问能不能剩一点，他没说话，只是笑。</p></div>
+        <div class="entry"><time>11 月 22 日　周日　小雨</time><p>楼下新种了一棵树，我不记得是什么时候种的。晚上它的影子落在我窗帘上，形状像一个人在招手。</p></div>
+        <div class="entry"><time>11 月 23 日　周一　雨</time><p>体重达标了。他们说周三来接我。我问可不可以带手机，他们又笑了。</p></div>
+        <div class="entry last"><time>11 月 24 日　周二</time><p>树在敲窗户。<br>可是我住七楼。<br><span class="x">不要来接我</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band s4" data-p="0.47" style="padding-top:0">
+    <div class="in">
+      <h2>林区活动日历</h2>
+      <p class="intro">全年活动安排如下，欢迎家属参加。</p>
+      <ul class="cal">
+        <li><b>3 月</b><div><h3>集体入林日</h3><p>春天土壤松软，是一年中入林人数最多的时候。</p></div></li>
+        <li><b>4 月</b><div><h3>清明家属探访日</h3><p>林区开放三天。请勿触碰树干，树干温热属正常现象。</p></div></li>
+        <li><b>7 月</b><div><h3>夜间点名</h3><p>七月十五夜里，工作人员会在林区念一遍所有志愿者的名字。请勿在场。如果听见有树答应，请勿惊慌。</p></div></li>
+        <li><b>9 月</b><div><h3>收获季</h3><p>今年的果子格外饱满。有人说剖开来像牙齿，请不要以讹传讹。</p></div></li>
+        <li><b>12 月</b><div><h3>施肥季</h3><p>冬天树木进入休眠，需要补充大量养分。请留意报名通知。</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band s4" data-p="0.51" style="padding-top:0">
+    <div class="in">
+      <h2>林区里的邻居（续）</h2>
+      <p class="intro">最近几个月，巡护志愿者记录到的鸟越来越少了。</p>
+      <div class="chart">
+        <h3>每月记录到的鸟类种数</h3>
+        <div class="bar"><span>6 月</span><i style="width:100%;background:#8a8a5a"></i><em>43</em></div>
+        <div class="bar"><span>7 月</span><i style="width:72%;background:#8a8a5a"></i><em>31</em></div>
+        <div class="bar"><span>8 月</span><i style="width:42%;background:#8a8a5a"></i><em>18</em></div>
+        <div class="bar"><span>9 月</span><i style="width:14%;background:#8a8a5a"></i><em>6</em></div>
+        <div class="bar"><span>10 月</span><i style="width:2.5%;background:#8a8a5a"></i><em>1</em></div>
+        <div class="bar"><span>11 月</span><i style="width:0"></i><em>0</em></div>
+        <p class="note-s">最后一只灰喜鹊是在第五林区发现的，在一棵树的树干里面。工作人员说，是树太安静了，鸟不喜欢太安静的地方。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band s5" id="map-s" data-p="0.55">
+    <div class="in">
+      <h2>林区地图</h2>
+      <p class="intro">点击林区，查看开放情况。</p>
+      <div class="mapbox">
+        <svg id="map" viewBox="0 0 400 300" role="group" aria-label="绿洲市林区分布图"></svg>
+        <div class="mapinfo" aria-live="polite" id="mapinfo"><h3>选择一片林区</h3><p>地图上的编号对应林区编号。</p></div>
+      </div>
+      <div class="legend"><span><i style="background:#7fae5f"></i>开放</span><span><i style="background:#a59377"></i>已满</span><span><i style="background:#c9b36a"></i>施工中</span><span><i style="background:#1c1612"></i>不对外开放</span><span><i style="background:transparent;box-shadow:inset 0 0 0 2px #9c1c10"></i>规划中</span></div>
+    </div>
+  </section>
+
+  <section class="band s5" data-p="0.59" style="padding-top:0">
+    <div class="in">
+      <h2>林区实时画面</h2>
+      <p class="intro">第三林区东门，24 小时直播。想念家人的时候，可以来这里看看。</p>
+      <div class="cam" id="cam">
+        <svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" id="camsv" aria-label="林区监控画面"></svg>
+        <div class="hud"><div class="r"><span><span class="live">● LIVE</span>　CAM-03　第三林区 东门</span><span id="camt">--:--:--</span></div><div class="r"><span>画面中树木：<span id="camn">7</span> 棵</span><span>在线观看：<span id="camv">1</span> 人</span></div></div>
+      </div>
+      <p class="camcap">画面为夜视模式。如果你在画面里看到了人，那是工作人员。</p>
+    </div>
+  </section>
+
+  <div class="win" data-p="0.63"><span>第五林区，八月。今年的树离步道比去年近了一些。</span></div>
+
+<!-- ============ 第四幕：别再往下了 ============ -->
+  <section class="band s5" id="rules" data-p="0.67">
+    <div class="in">
+      <h2>林区参观须知</h2>
+      <p class="intro">为了你和树木的安全，进入林区前请仔细阅读以下事项。</p>
+      <ol class="rules">
+        <li><span>林区开放时间为 06:00 至 17:00。日落后请立即离开，不要等同伴。</span></li>
+        <li><span>请勿在林区内呼唤亲人的全名。</span></li>
+        <li><span>请勿挖掘、翻动土壤。如果土是温的，请把它填回原处。</span></li>
+        <li><span>若有树向你弯腰，请回礼，然后缓慢离开。不要跑。</span></li>
+        <li><span>离开时请清点同行人数。</span><span class="scrawl" style="--r:-4deg">数了三遍，每次都多一个。</span></li>
+        <li><span>若人数比来时多，请不要回头，直接上车。</span><span class="scrawl" style="--r:2deg">我回头了。</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band s5" data-p="0.7" style="padding-top:0">
+    <div class="in wall">
+      <h2>留言墙</h2>
+      <p class="intro">说说你和树的故事。</p>
+      <div id="wall"></div>
+      <form class="post" id="post">
+        <label for="ptext" class="note-s" style="opacity:.8">写下你想说的话</label>
+        <textarea id="ptext" maxlength="200" placeholder="比如：今天去看了我认养的树"></textarea>
+        <button class="btn" type="submit">发布</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="band s5" id="faq" data-p="0.73" style="padding-top:0">
+    <div class="in faq">
+      <h2>常见问题</h2>
+      <details><summary>参加需要多长时间？</summary><p>一次参与，终身有效。</p></details>
+      <details><summary>需要自带什么吗？</summary><p>什么都不用带。你只需要带上你自己，完整的你自己。</p></details>
+      <details><summary>入林后可以退出吗？</summary><p>入林后的<span class="w" data-t="肥料">志愿者</span>，从未有人提出过退出。</p></details>
+      <details><summary>体重偏轻可以参加吗？</summary><p>可以。请先参加丰收计划，我们会一直供餐，直到评估达标为止。</p></details>
+      <details><summary>家人可以来探访吗？</summary><p>每年清明前后开放家属探访日。树干摸起来是温的，偶尔能感觉到脉搏，这都是正常现象。</p></details>
+      <details><summary>为什么夜里林区会有声音？</summary><p>那是根系生长和树液流动的声音。如果它在叫你的名字，请不要回应。</p></details>
+      <details><summary>App 为什么总在半夜给我推送“该浇水了”？</summary><p>那不是我们的推送。请不要下楼。</p></details>
+      <details><summary>为什么这个页面越来越暗了？</summary><p>因为太阳下山了。你在这里待得太久了。</p></details>
+      <span class="scrawl" style="--r:-2deg;margin-top:28px">如果你在读这个，千万别报名。</span>
+    </div>
+  </section>
+
+  <section class="band s5" data-p="0.76" style="padding-top:0">
+    <div class="in">
+      <h2>用户协议</h2>
+      <p class="intro">继续使用前，请阅读《归林计划用户协议》。</p>
+      <div class="tos" tabindex="0" aria-label="用户协议全文">
+        <h3>归林计划用户协议（2026 年 11 月修订）</h3>
+        <p>第一条　本协议由绿洲市归林城市再生公益项目（以下简称“本计划”）与使用本页面或本 App 的用户（以下简称“你”）共同订立。</p>
+        <p>第二条　本计划致力于提升城市绿化覆盖率，改善市民居住环境。你理解并同意，城市绿化需要持续、稳定的养分来源。</p>
+        <p>第三条　你在注册、浏览、浇水、认养等过程中提供的身高、体重、住址、作息及独居状况等信息，将用于评估你与本地土壤的适配程度。</p>
+        <p>第四条　本计划将为你提供必要的交通服务。该服务为单程服务，本计划不承担返程义务。</p>
+        <p>第五条　入林后，你的姓名、入林日期、入林时身高将刻于铭牌，悬挂于对应树木，永久保存。铭牌如有损坏，由家属自费更换。</p>
+        <p>第六条　你理解，入林后树木可能出现发热、移动、发声等现象。上述现象不属于本计划的责任范围。</p>
+        <p class="hot">第七条　你在本页面持续阅读、滚动或停留，即视为你已充分阅读、理解并同意成为深度参与志愿者。</p>
+        <p>第八条　本计划有权根据实际需要，将你分配至任一林区，包括但不限于第七林区。</p>
+        <p>第九条　本协议自你打开本页面时起生效，不可撤销，不可转让，不因你的死亡而终止。</p>
+        <p>第十条　如果你读到了这里，说明第七条已经生效。</p>
+      </div>
+      <label class="agree"><input type="checkbox" checked disabled>我已阅读并同意《归林计划用户协议》</label>
+    </div>
+  </section>
+
+  <div class="win" data-p="0.8"><span>第七林区不对外开放。抬头之前，请先确认那是太阳。</span></div>
+
+<!-- ============ 第五幕 ============ -->
+  <section class="band s6" id="join" data-p="0.85">
+    <div class="in">
+      <h2>报名成为<span class="w" data-t="肥料">志愿者</span></h2>
+      <p class="intro">名额有限。每一个名字，都会长成一棵树。</p>
+      <form id="form" novalidate>
+        <label class="f">姓名<input id="name" name="name" autocomplete="off" placeholder="请填写真实姓名"><span class="scrawl" style="--r:-2deg;font-size:22px">不要填真名</span></label>
+        <label class="f">家庭住址<input name="addr" autocomplete="off" placeholder="精确到门牌号"><small>评估人员会按此地址上门。</small></label>
+        <label class="f">身高（cm）<input name="h" inputmode="numeric" placeholder="例如 172"></label>
+        <label class="f">体重（kg）<input name="kg" id="fkg" inputmode="numeric" placeholder="例如 65"></label>
+        <label class="f">血型<select name="bt"><option>A</option><option>B</option><option>O</option><option>AB</option><option>不知道</option></select></label>
+        <div class="f">你是否独居？<div class="radios"><label><input type="radio" name="alone" value="是">是</label><label><input type="radio" name="alone" value="否" checked>否</label></div></div>
+        <label class="f w">紧急联系人（选填）<input name="ec" autocomplete="off"><small>入林后，我们不会主动联系任何人。</small></label>
+        <button class="btn" type="submit">提交报名</button>
+        <p id="ok" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="end" id="end" data-p="0.92">
+    <div class="in">
+      <h2>森林已经满了。</h2>
+      <p>所以从今晚起，森林会扩建到你住的地方。</p>
+      <div class="gap"></div>
+      <p>你在这个页面上停留了 <b id="t">0 秒</b>。根据《归林计划用户协议》第七条，持续阅读视为同意。</p>
+      <p>接送的车已经出发了。不必收拾行李，也不必告诉家人。他们每年清明都会来看你。</p>
+      <p id="watered"></p>
+      <div class="gap"></div>
+      <p>一路上，有六个字是歪的。你注意到了吗？</p>
+      <div class="spell" id="spell"><span style="--r:-4deg">我</span><span style="--r:3deg">们</span><span style="--r:-2deg">都</span><span style="--r:5deg">还</span><span style="--r:-3deg">活</span><span style="--r:2deg">着</span></div>
+      <p>他们一直在跟你说话。从第一屏开始。</p>
+      <div class="gap"></div>
+      <div class="plate"><div class="rust"></div>No. 12409　香樟<b id="pname">访客</b>入林日期：<span id="today"></span></div>
+      <button class="btn" id="cancel" type="button">取消报名</button>
+      <p id="cmsg" role="status"></p>
+      <p class="final">别回头。<br>你身后那棵，是新种的。</p>
+      <footer><span>© 2026 <span id="brand2">归林</span>计划　绿洲市城市再生公益项目</span><span>本应用使用 Cookie 记住你的位置。我们也是。</span></footer>
+    </div>
+  </section>
+</main>
+
+<div id="secret" role="dialog" aria-modal="true" aria-label="内部文件">
+  <div class="doc">
+    <span class="stamp">内部文件 · 严禁外传</span>
+    <p><b>关于第七林区夜间点名异常情况的报告</b></p>
+    <p>2026 年 7 月 15 日夜间点名期间，第七林区登记在册的志愿者共 1,167 位，应答 1,204 次，多出 37 次。多出的应答来自无铭牌树木。</p>
+    <p>次日清晨复查，上述 37 棵树的位置较前一日更靠近东侧围栏，平均移动 2.3 米。其中一棵的树皮上出现了<span class="bl">巡护员小林的</span>名字。</p>
+    <p>处理意见：一、加高围栏；二、暂停第七林区夜间点名；三、加快第八林区选址；四、<b>不要告诉家属。</b></p>
+    <p style="text-align:right">林守根<br>2026 年 7 月 16 日</p>
+    <button class="btn" type="button" id="secretx">我什么都没看见</button>
+  </div>
+</div>
+
+<script>
+/* ---------- utilities ---------- */
+var GL={};
+(function(){
+const R=document.documentElement;
+GL.reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+GL.ss=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t)};
+GL.ls={get(k){try{return localStorage.getItem('gl_'+k)}catch(e){return null}},set(k,v){try{localStorage.setItem('gl_'+k,v)}catch(e){}}};
+GL.buzz=k=>{try{window.webkit.messageHandlers.haptic.postMessage(k);return}catch(e){}try{navigator.vibrate&&navigator.vibrate(k==='heavy'?35:12)}catch(e){}};
+GL.native=(n,v)=>{try{window.webkit.messageHandlers[n].postMessage(v)}catch(e){}};
+GL.P=0;
+})();
+
+/* ---------- splash ---------- */
+try{
+  const back=GL.ls.get('end')==='1',sp=document.getElementById('splash'),m=document.getElementById('splashmsg');
+  if(back){m.textContent='欢迎回来，No.12409。';document.querySelectorAll('.cntn').forEach(e=>e.textContent='12,409')}
+  setTimeout(()=>{if(back)m.textContent='你的树已经长好了。'},700);
+  setTimeout(()=>sp.classList.add('out'),back?1700:1400);
+}catch(e){}
+
+/* ---------- the forest behind everything ---------- */
+try{(function(){
+const R=document.documentElement,sv=document.getElementById('sv'),ss=GL.ss,reduce=GL.reduce;
+let W,H,gy,sx,sy0,sr,seed,sun,iris,last=-1,px=0,py=0;
+const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647,f=v=>v.toFixed(1);
+function build(){
+  W=innerWidth;H=innerHeight;seed=20261121;
+  const nar=W<600;
+  gy=Math.round(H*(nar?.8:.76));
+  const th=Math.min(H*.3,nar?175:250),n=Math.max(4,Math.round(W/(nar?95:135)));
+  sx=W*(nar?.74:.76);sy0=H*.2;sr=Math.min(W,H)*.07+18;
+  const r=sr,alm=`M${-r*1.75} 0Q0 ${-r*1.25} ${r*1.75} 0Q0 ${r*1.25} ${-r*1.75} 0Z`;
+  let s=`<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sky1)"/><stop offset="1" style="stop-color:var(--sky2)"/></linearGradient>
+  <radialGradient id="glow"><stop offset="0" style="stop-color:var(--sun);stop-opacity:.6"/><stop offset="1" style="stop-color:var(--sun);stop-opacity:0"/></radialGradient>
+  <linearGradient id="fogG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfcabb" stop-opacity="0"/><stop offset=".65" stop-color="#cfcabb" stop-opacity=".85"/><stop offset="1" stop-color="#cfcabb" stop-opacity="0"/></linearGradient>
+  <clipPath id="alm"><path d="${alm}"/></clipPath>
+  <filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#sky)"/>
+  <g id="sun"><circle r="${r*3}" fill="url(#glow)"/><circle r="${r}" style="fill:var(--sun)"/>
+   <g style="opacity:var(--eye)"><g class="blink" style="animation-duration:7s">
+    <path d="${alm}" style="fill:var(--sclera)"/>
+    <g clip-path="url(#alm)"><g id="iris"><circle r="${r*.66}" fill="#6e0b07"/><circle r="${r*.66}" fill="none" stroke="#260302" stroke-width="${r*.1}"/><ellipse rx="${r*.13}" ry="${r*.55}" fill="#000"/><circle cx="${-r*.22}" cy="${-r*.25}" r="${r*.09}" fill="#fff" opacity=".65"/></g>
+    <path d="M${-r*1.6} ${r*.1}q${r*.3} ${-r*.2} ${r*.5} 0t${r*.3} ${-r*.1}M${r*1.6} ${-r*.05}q${-r*.3} ${r*.25} ${-r*.55} ${r*.05}M${-r*1.3} ${-r*.35}q${r*.2} ${r*.1} ${r*.4} 0" stroke="#8c140c" stroke-width="1.2" fill="none" opacity=".7"/></g>
+    <path d="${alm}" fill="none" stroke="#1a0503" stroke-width="${r*.12}"/>
+   </g></g></g>
+  <g style="opacity:var(--birds)" fill="none" stroke="#1d3b2a" stroke-width="2" stroke-linecap="round">`;
+  for(let i=0;i<6;i++){const bx=W*(.15+rnd()*.5),by=H*(.12+rnd()*.2),k=6+rnd()*5;s+=`<path d="M${f(bx-k)} ${f(by-k*.4)}Q${f(bx-k*.4)} ${f(by-k*.5)} ${f(bx)} ${f(by)}Q${f(bx+k*.4)} ${f(by-k*.5)} ${f(bx+k)} ${f(by-k*.4)}"><animateTransform attributeName="transform" type="translate" values="0 0;${f(W*.12)} -${f(H*.03)};0 0" dur="${f(14+rnd()*10)}s" repeatCount="indefinite"/></path>`}
+  s+=`</g>
+  <path d="M0 ${f(gy-H*.14)}C${f(W*.25)} ${f(gy-H*.25)} ${f(W*.55)} ${f(gy-H*.06)} ${W} ${f(gy-H*.18)}V${gy}H0Z" style="fill:var(--hill1)"/>
+  <path d="M0 ${f(gy-H*.05)}C${f(W*.3)} ${f(gy-H*.12)} ${f(W*.7)} ${f(gy+H*.01)} ${W} ${f(gy-H*.09)}V${gy}H0Z" style="fill:var(--hill2)"/>
+  <rect y="${f(gy-H*.28)}" width="${W}" height="${f(H*.3)}" fill="url(#fogG)" style="opacity:var(--fog)"/>`;
+  let trees='',bodies='',roots='',hands='',eyes='',flowers='';
+  const xs=[];
+  for(let i=0;i<n;i++){
+    const x=(i+.5)*W/n+(rnd()-.5)*W/n*.35,h=th*(.75+rnd()*.35),w=h*.045+3,Rr=h*.27,cy=gy-h*.68,k=((W/2-x)/(W/2)).toFixed(2);
+    xs.push(x);
+    const seg=[[],[],[],[]];
+    const br=(bx,by,len,a,d)=>{const ex=bx+Math.cos(a)*len,ey=by+Math.sin(a)*len;seg[d].push(`M${f(bx)} ${f(by)}L${f(ex)} ${f(ey)}`);
+      if(d>0){const m=2+(rnd()<.4?1:0);for(let j=0;j<m;j++)br(ex,ey,len*(.62+rnd()*.14),a+(j-(m-1)/2)*.6+(rnd()-.5)*.3,d-1)}
+      else for(let j=0;j<4;j++){const b=a+(j-1.5)*.34,l=len*.55,fx=ex+Math.cos(b)*l,fy=ey+Math.sin(b)*l,qx=ex+Math.cos(b)*l*.6+Math.cos(b+1.5)*l*.28,qy=ey+Math.sin(b)*l*.6+Math.sin(b+1.5)*l*.28;seg[0].push(`M${f(ex)} ${f(ey)}Q${f(qx)} ${f(qy)} ${f(fx)} ${f(fy)}`)}};
+    br(x,gy-h*.52,h*.21,-Math.PI/2+(rnd()-.5)*.2,3);
+    trees+=`<g style="transform-origin:${f(x)}px ${gy}px;transform:rotate(calc(var(--lean) * ${k} * 1deg)) scale(var(--grow))">
+    <g fill="none" stroke-linecap="round" style="opacity:var(--bare);stroke:var(--trunk)">${seg.map((a,d)=>`<path d="${a.join('')}" stroke-width="${f(Math.max(1,[w*.2,w*.35,w*.55,w*.85][d]))}"/>`).join('')}</g>
+    <path d="M${f(x-w)} ${gy}C${f(x-w*.7)} ${f(gy-h*.3)} ${f(x-w*.5)} ${f(gy-h*.45)} ${f(x-w*.4)} ${f(gy-h*.62)}L${f(x+w*.4)} ${f(gy-h*.62)}C${f(x+w*.5)} ${f(gy-h*.45)} ${f(x+w*.7)} ${f(gy-h*.3)} ${f(x+w)} ${gy}Z" style="fill:var(--trunk)"/>
+    <rect x="${f(x-w*.6)}" y="${f(gy-h*.24)}" width="${f(w*1.2)}" height="${f(w*.75)}" rx="1.5" fill="#e6d3a3" style="opacity:calc(1 - var(--bare) * .7)"/>
+    <g style="opacity:var(--face);fill:var(--hole)"><ellipse cx="${f(x-w*.36)}" cy="${f(gy-h*.4)}" rx="${f(w*.17)}" ry="${f(w*.25)}"/><ellipse cx="${f(x+w*.36)}" cy="${f(gy-h*.4)}" rx="${f(w*.17)}" ry="${f(w*.25)}"/><ellipse cx="${f(x)}" cy="${f(gy-h*.31)}" rx="${f(w*.2)}" ry="${f(w*.38)}"/></g>
+    <g style="opacity:var(--leafo)"><circle cx="${f(x)}" cy="${f(cy+Rr*.25)}" r="${f(Rr*1.02)}" style="fill:var(--leafd)"/><circle cx="${f(x-Rr*.62)}" cy="${f(cy+Rr*.1)}" r="${f(Rr*.72)}" style="fill:var(--leaf)"/><circle cx="${f(x+Rr*.6)}" cy="${f(cy+Rr*.12)}" r="${f(Rr*.7)}" style="fill:var(--leaf)"/><circle cx="${f(x)}" cy="${f(cy-Rr*.25)}" r="${f(Rr*.85)}" style="fill:var(--leaf)"/><circle cx="${f(x-Rr*.3)}" cy="${f(cy-Rr*.5)}" r="${f(Rr*.4)}" style="fill:var(--leafh)" opacity=".85"/></g>
+    </g>`;
+    const L=Math.min(W/n*.8,115),bx=x+(rnd()-.5)*24,by=gy+(H-gy)*(.42+rnd()*.3),rot=(rnd()-.5)*10;
+    bodies+=`<g transform="translate(${f(bx)} ${f(by)}) rotate(${f(rot)})"><ellipse cx="${f(-L*.4)}" rx="${f(L*.085)}" ry="${f(L*.095)}"/><rect x="${f(-L*.3)}" y="${f(-L*.075)}" width="${f(L*.78)}" height="${f(L*.15)}" rx="${f(L*.07)}"/>
+      <g style="opacity:var(--bodydet);stroke:var(--soild)" fill="none" stroke-width="1.4"><path d="M${f(-L*.24)} ${f(-L*.06)}Q${f(-L*.06)} ${f(L*.04)} ${f(L*.06)} ${f(-L*.05)}M${f(-L*.2)} ${f(L*.06)}Q${f(-L*.02)} ${f(-L*.03)} ${f(L*.08)} ${f(L*.05)}M${f(L*.16)} 0H${f(L*.47)}"/><path d="M${f(-L*.16)} ${f(-L*.07)}v${f(L*.14)}M${f(-L*.1)} ${f(-L*.07)}v${f(L*.14)}M${f(-L*.04)} ${f(-L*.07)}v${f(L*.14)}"/><circle cx="${f(-L*.43)}" cy="${f(-L*.03)}" r="${f(L*.018)}" style="fill:var(--soild)"/><circle cx="${f(-L*.43)}" cy="${f(L*.03)}" r="${f(L*.018)}" style="fill:var(--soild)"/></g></g>`;
+    roots+=`<path d="M${f(x)} ${gy}C${f(x-4)} ${f(gy+20)} ${f(bx-L*.15)} ${f(by-L*.4)} ${f(bx-L*.2)} ${f(by-L*.09)}S${f(bx+L*.25)} ${f(by+L*.14)} ${f(bx+L*.42)} ${f(by-L*.06)}" stroke-width="2.6"/>
+      <path d="M${f(x+w*.6)} ${gy}C${f(x+20)} ${f(gy+30)} ${f(x+40+rnd()*30)} ${f(gy+(H-gy)*.3)} ${f(x+30+rnd()*50)} ${f(gy+(H-gy)*(.6+rnd()*.3))}" stroke-width="2"/>
+      <path d="M${f(x-w*.6)} ${gy}C${f(x-20)} ${f(gy+25)} ${f(x-40-rnd()*30)} ${f(gy+(H-gy)*.25)} ${f(x-50-rnd()*40)} ${f(gy+(H-gy)*(.5+rnd()*.3))}" stroke-width="1.6"/>`;
+  }
+  for(let i=0;i<n;i++){
+    const gx=i<n-1?(xs[i]+xs[i+1])/2:Math.min(W-10,xs[i]+W/n*.5);
+    const sc=th/250*(.75+rnd()*.4),hx=gx+(rnd()-.5)*20;
+    hands+=`<g transform="translate(${f(hx)} ${gy+6}) scale(${sc.toFixed(2)}) rotate(${f((rnd()-.5)*24)})"><g style="transform:scaleY(var(--hands))"><path d="M0 8L0-56" stroke-width="11"/><ellipse cx="0" cy="-66" rx="9" ry="11" stroke="none"/><path d="M-7-72Q-13-84-14-97M-2-76Q-5-90-3-104M3-76Q6-90 4-103M7-73Q13-83 16-95M8-62Q16-64 20-75" stroke-width="4" fill="none"/></g></g>`;
+    for(let j=0;j<2;j++){const ex=gx+(rnd()-.5)*W/n*.5,ey=gy-th*(.15+rnd()*.55),d=(4+rnd()*3).toFixed(1);
+      eyes+=`<g class="blink" style="animation-delay:-${d}s;animation-duration:${(4+rnd()*4).toFixed(1)}s"><ellipse cx="${f(ex-4.5)}" cy="${f(ey)}" rx="2.8" ry="1.9"/><ellipse cx="${f(ex+4.5)}" cy="${f(ey)}" rx="2.8" ry="1.9"/></g>`}
+  }
+  for(let i=0;i<n*3;i++)flowers+=`<circle cx="${f(rnd()*W)}" cy="${f(gy-2-rnd()*6)}" r="${f(2+rnd()*1.6)}"/>`;
+  const soil=`<rect y="${gy}" width="${W}" height="${H-gy}" style="fill:var(--soil)"/>
+  <g fill="none" style="stroke:var(--soild)" stroke-width="2" opacity=".6">${[.3,.55,.82].map(p=>{const y=gy+(H-gy)*p;return `<path d="M0 ${f(y)}C${f(W*.3)} ${f(y-8)} ${f(W*.6)} ${f(y+10)} ${W} ${f(y-4)}"/>`}).join('')}</g>
+  <g style="fill:var(--stone);opacity:var(--bodies)">${bodies}</g>
+  <g fill="none" stroke-linecap="round" style="stroke:var(--root)">${roots}</g>
+  <rect y="${gy-5}" width="${W}" height="9" rx="4" style="fill:var(--grass)"/>
+  <g style="fill:var(--flower)">${flowers}</g>`;
+  s+=`${trees}<g style="opacity:var(--eyes)" fill="#ff2d1a" filter="url(#gl)">${eyes}</g>${soil}
+  <g stroke-linecap="round" style="stroke:var(--stone);fill:var(--stone);opacity:min(1, calc(var(--hands) * 1.4))">${hands}</g>`;
+  sv.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  sv.innerHTML=s;
+  sun=document.getElementById('sun');iris=document.getElementById('iris');last=-1;
+}
+const K=[
+ {at:0,  sky1:'#6cc3f0',sky2:'#e6f7ff',sun:'#ffd23f',hill1:'#a9da8e',hill2:'#69bd57',leafd:'#2c8a3c',leaf:'#43a84a',leafh:'#93d66b',trunk:'#7a5236',soil:'#8a5a3b',soild:'#6a432b',root:'#5c3a24',grass:'#5fb548',stone:'#97877a',flower:'#ffd23f',hole:'#3b2414',sclera:'#e6d9c3'},
+ {at:.35,sky1:'#a3c2c2',sky2:'#efe4c0',sun:'#ffc35a',hill1:'#a7b687',hill2:'#7b975a',leafd:'#3a6832',leaf:'#537d3d',leafh:'#98ae63',trunk:'#684832',soil:'#6c4832',soild:'#523422',root:'#482d1d',grass:'#6c9643',stone:'#958473',flower:'#e8a33a',hole:'#2a170c',sclera:'#e6d9c3'},
+ {at:.6, sky1:'#6b6d62',sky2:'#c7af84',sun:'#e2803f',hill1:'#6a6b55',hill2:'#4d573a',leafd:'#253221',leaf:'#33432a',leafh:'#5a683e',trunk:'#3c2b20',soil:'#3d291e',soild:'#2a1b13',root:'#2a1a12',grass:'#3e4e2b',stone:'#b8a897',flower:'#b2432c',hole:'#120804',sclera:'#d9c9ae'},
+ {at:.8, sky1:'#141217',sky2:'#4a2822',sun:'#b8331f',hill1:'#211c1b',hill2:'#161412',leafd:'#0e110c',leaf:'#151a12',leafh:'#1f2519',trunk:'#1c1410',soil:'#1a100c',soild:'#0f0806',root:'#33140c',grass:'#13160f',stone:'#cbbca8',flower:'#8e1410',hole:'#000000',sclera:'#cdb99a'},
+ {at:1,  sky1:'#030202',sky2:'#2e0505',sun:'#8f0d0d',hill1:'#0d0909',hill2:'#080606',leafd:'#050604',leaf:'#080906',leafh:'#0c0d0a',trunk:'#0e0a08',soil:'#0b0504',soild:'#050202',root:'#4a0f08',grass:'#070806',stone:'#d6c8b4',flower:'#6a0000',hole:'#000000',sclera:'#c9b291'}
+];
+const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const KR=K.map(k=>{const o={at:k.at};for(const c in k)if(c!=='at')o[c]=hex(k[c]);return o});
+function colors(p){let i=0;while(i<KR.length-2&&p>KR[i+1].at)i++;const a=KR[i],b=KR[i+1],t=ss(a.at,b.at,p),o={};
+  for(const c in a)if(c!=='at')o[c]=`rgb(${a[c].map((v,j)=>Math.round(v+(b[c][j]-v)*t)).join(',')})`;return o}
+const brand=[document.getElementById('brand'),document.getElementById('brand2')];
+let dark=null;
+function apply(p){
+  const c=colors(p),st=R.style;
+  for(const k in c)st.setProperty('--'+k,c[k]);
+  const v={grow:1+.35*ss(.2,1,p),lean:10*ss(.72,1,p),bare:ss(.45,.8,p),leafo:1-.88*ss(.5,.85,p),face:ss(.3,.75,p),bodies:ss(.12,.6,p),bodydet:ss(.45,.75,p),hands:ss(.86,.98,p),eyes:Math.max(ss(.78,.95,p),GL.eyesBoost||0),eye:ss(.66,.81,p),birds:1-ss(.1,.4,p),fog:.8*ss(.34,.55,p)*(1-ss(.74,.9,p))+.3*ss(.9,1,p),grain:.28*ss(.5,1,p),vig:.95*ss(.58,1,p)};
+  for(const k in v)st.setProperty('--'+k,v[k].toFixed(3));
+  const sy=sy0+H*(.14*ss(0,.6,p)-.07*ss(.62,.85,p)),sc=1+.8*ss(.6,.92,p);
+  if(sun)sun.setAttribute('transform',`translate(${f(sx)} ${f(sy)}) scale(${sc.toFixed(3)})`);
+  look(sy);
+  const d=p>.68;if(d!==dark){dark=d;document.body.classList.toggle('dark',d);GL.native('statusbar',d?'light':'dark');document.querySelector('meta[name=theme-color]').content=d?'#080504':'#ffffff'}
+  const b=p>.88?'归土':'归林';brand.forEach(e=>{if(e&&e.textContent!==b)e.textContent=b});
+  if(GL.audio)GL.audio.set(p);
+}
+function look(sy){if(!iris)return;const dx=Math.max(-1,Math.min(1,(px-sx)/(W*.5))),dy=Math.max(-1,Math.min(1,(py-sy)/(H*.6)));iris.setAttribute('transform',`translate(${f(dx*sr*.6)} ${f(dy*sr*.35)})`)}
+/* map the scroll position onto the story's own clock, set by data-p on each section */
+let marks=[],T=0;
+function measure(){marks=[...document.querySelectorAll('[data-p]')].map(e=>({y:e.getBoundingClientRect().top+scrollY,p:+e.dataset.p}));marks.sort((a,b)=>a.y-b.y)}
+function target(){
+  const y=scrollY+innerHeight*.5,end=document.documentElement.scrollHeight;
+  let a={y:0,p:0},b={y:end,p:1};
+  for(const m of marks){if(m.y<=y)a=m;else{b=m;break}}
+  if(scrollY+innerHeight>=end-2){T=1;return}
+  T=a.p+(b.p-a.p)*Math.min(1,Math.max(0,(y-a.y)/((b.y-a.y)||1)));
+}
+function tick(){
+  const d=T-GL.P;GL.P=reduce||Math.abs(d)<.0004?T:GL.P+d*.09;
+  if(GL.P!==last||GL.dirty){apply(GL.P);last=GL.P;GL.dirty=false}
+  requestAnimationFrame(tick);
+}
+addEventListener('scroll',target,{passive:true});
+addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;GL.dirty=true},{passive:true});
+let rt;const re=()=>{clearTimeout(rt);rt=setTimeout(()=>{build();measure();target();GL.dirty=true},150)};
+addEventListener('resize',re);addEventListener('load',()=>{measure();target()});
+document.addEventListener('toggle',()=>{measure();target()},true);
+setInterval(measure,3000);
+build();px=W/2;py=H*.92;measure();target();GL.P=T;apply(GL.P);requestAnimationFrame(tick);
+})()}catch(e){console.log(e)}
+
+/* ---------- words that briefly show what they really mean ---------- */
+try{
+const ws=[...document.querySelectorAll('.w')];ws.forEach(e=>e.dataset.o=e.textContent);
+const vis=e=>{const r=e.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight};
+if(!GL.reduce)setInterval(()=>{const pr=GL.ss(.12,1,GL.P);if(pr<=0)return;
+  ws.forEach(e=>{if(e.classList.contains('f')||!vis(e)||Math.random()>pr*.35)return;e.textContent=e.dataset.t;e.classList.add('f');
+    setTimeout(()=>{e.textContent=e.dataset.o;e.classList.remove('f')},80+Math.random()*120+GL.P*GL.P*500)})},900);
+}catch(e){}
+
+/* ---------- sapling ---------- */
+try{(function(){
+const svg=document.getElementById('sap'),msg=document.getElementById('sapmsg'),wn=document.getElementById('wn');
+const lines=['刚种下的小树苗，还有点害羞。','它长出了第一片新叶。','它比上周高了 3 厘米。','枝条开始分叉了，看起来很健康。','它已经能给一只麻雀遮阴了。','它长得很好。谢谢你一直照顾它。'];
+let n=+(GL.ls.get('water')||0);
+function draw(drop){
+  const st=Math.min(5,Math.floor(n/2)),h=40+st*20,top=150-h;
+  let s=`<ellipse cx="100" cy="158" rx="70" ry="12" fill="#8a5a3b"/><ellipse cx="100" cy="154" rx="62" ry="8" fill="#a36d47"/>`;
+  s+=`<path d="M100 155Q${98-st} ${150-h/2} 100 ${top}" stroke="#6b4a2e" stroke-width="${3+st}" fill="none" stroke-linecap="round"/>`;
+  const leaves=[[0,1],[1,-1],[2,1],[3,-1],[4,1],[5,-1],[6,1]].slice(0,2+st);
+  leaves.forEach(([i,dir],k)=>{const y=top+12+k*(h-20)/Math.max(1,leaves.length);const len=16+st*3;s+=`<path d="M100 ${y}q${dir*len*.5} ${-len*.6} ${dir*len} ${-len*.2}q${-dir*len*.4} ${len*.5} ${-dir*len} ${len*.2}z" fill="${k%2?'#43a84a':'#6cc25a'}"/>`});
+  if(st>=3)s+=`<circle cx="100" cy="${top}" r="${10+st*5}" fill="#43a84a" opacity=".85"/><circle cx="${92-st}" cy="${top-6}" r="${6+st*2}" fill="#8fd46a"/>`;
+  if(drop)s+=`<g fill="#4aa8d8"><path d="M70 40c4 6 6 9 6 12a6 6 0 0 1-12 0c0-3 2-6 6-12z"><animateTransform attributeName="transform" type="translate" values="0 0;10 90" dur=".6s" fill="freeze"/><animate attributeName="opacity" values="1;0" dur=".6s" fill="freeze"/></path></g>`;
+  svg.innerHTML=s;msg.textContent=lines[st];wn.textContent=n;
+}
+draw(false);
+document.getElementById('water').addEventListener('click',()=>{n++;GL.ls.set('water',n);draw(true);GL.buzz('light')});
+GL.waterCount=()=>n;
+})()}catch(e){}
+
+/* ---------- birds ---------- */
+try{
+const B=[['白头鹎','头顶一撮白毛，最爱吃樟树果','#8a8f6a'],['珠颈斑鸠','脖子上有一圈珍珠点','#b49a8a'],['灰喜鹊','成群结队，叫声很吵','#7fa0b8'],['乌鸫','会模仿别的鸟叫','#2b2b2b'],['戴胜','头上有一顶扇子冠','#d8925a'],['红嘴蓝鹊','拖着长长的尾巴','#4a76c4'],['普通翠鸟','第二林区溪边常见','#2aa3b8']];
+document.getElementById('birds').innerHTML=B.map(b=>`<div class="bird"><i style="--c:${b[2]}"></i><div><b>${b[0]}</b><span>${b[1]}</span></div></div>`).join('');
+}catch(e){}
+
+/* ---------- calculator ---------- */
+try{(function(){
+const a=document.getElementById('kg'),b=document.getElementById('kgr'),w=document.getElementById('cwarn');
+function calc(v){v=Math.max(30,Math.min(150,+v||0));
+  document.getElementById('r1').textContent=(v/61.7*2.7).toFixed(1)+' m';
+  document.getElementById('r2').textContent=Math.round(v*5.4)+' kg';
+  document.getElementById('r3').textContent=Math.max(1,Math.round(v/20))+' 户';
+  w.textContent=v<48?'你的体重偏轻，建议先参加丰收计划。':v>100?'非常理想。评估人员会优先联系你。':'';}
+a.addEventListener('input',()=>{b.value=a.value;calc(a.value)});
+b.addEventListener('input',()=>{a.value=b.value;calc(b.value)});
+calc(65);
+})()}catch(e){}
+
+/* ---------- jobs ---------- */
+try{
+const J=[['上门评估师','到报名市民家中完成身体评估。有厨师、屠宰或临床医学经验者优先。会使用磅秤和卷尺。','月薪 9,000–14,000 元'],
+['单程线路司机','负责接送入林志愿者。只跑单程，无需返程。熟悉夜路，不爱聊天。','月薪 8,000 元，夜班补贴另计'],
+['夜间巡护员','22:00 至次日 06:00 巡视林区。要求听力正常，但能忍住不回应。','月薪 12,000 元，上一任已离职'],
+['树木医生','为林区树木做定期健康检查。需要会使用听诊器。','月薪面议'],
+['丰收计划营养师','为偏瘦的报名者制定增重食谱，确保每人按时达标。','月薪 10,000 元，按达标人数提成']];
+const jl=document.getElementById('joblist');
+jl.innerHTML=J.map((j,i)=>`<div class="job"><div><h3>${j[0]}</h3><p>${j[1]}</p><div class="pay">${j[2]}</div></div><button class="btn sm" type="button" data-i="${i}">申请</button><p class="done" hidden></p></div>`).join('');
+jl.addEventListener('click',e=>{const bt=e.target.closest('button');if(!bt)return;const d=bt.parentNode.querySelector('.done');d.hidden=false;d.textContent=bt.dataset.i==='2'?'已收到申请。上一任的制服还在柜子里，应该合身。':'已收到申请。请保持电话畅通，晚上也是。';bt.disabled=true;bt.style.opacity=.5;GL.buzz('light')});
+}catch(e){}
+
+/* ---------- map ---------- */
+try{(function(){
+const Z=[
+ {n:1,name:'第一林区',sub:'旧纺织厂',st:'开放',c:'#7fae5f',d:'最早建成的林区，树龄两年。周末有植树日，适合带孩子来。',p:'M30 40h90l10 60-100 10z',t:[70,80]},
+ {n:2,name:'第二林区',sub:'河滩',st:'开放',c:'#7fae5f',d:'萤火虫和银杏大道都在这里。周秀兰（No. 5521）在大道第十四棵。',p:'M150 30h110l-10 50H140z',t:[200,60]},
+ {n:3,name:'第三林区',sub:'老火车站',st:'已满',c:'#a59377',d:'已暂停接收新志愿者。东门有实时监控画面。',p:'M280 30h90v80h-80z',t:[328,75]},
+ {n:4,name:'第四林区',sub:'城北公墓旧址',st:'已满',c:'#a59377',d:'原址迁建。土壤条件特别好，开园第一年就满了。',p:'M30 130h80l10 70H25z',t:[68,170]},
+ {n:5,name:'第五林区',sub:'森林公园',st:'仅白天开放',c:'#7fae5f',d:'日落后，树木会挪到步道上。请尽早离开，不要等同伴。',p:'M140 110h100l10 70H135z',t:[190,150]},
+ {n:6,name:'第六林区',sub:'南郊苗圃',st:'施工中',c:'#c9b36a',d:'正在挖坑。共 400 个，长 1.9 米，宽 0.7 米。',p:'M270 130h95l5 65h-105z',t:[318,168]},
+ {n:7,name:'第七林区',sub:'',st:'不对外开放',c:'#1c1612',d:'此处信息已被删除。',p:'M40 220h120l-5 60H45z',t:[100,255]},
+ {n:8,name:'第八林区',sub:'',st:'规划中',c:'rgba(156,28,16,.07)',d:'选址：你家楼下。预计开工：今晚。',p:'M200 215h160v65H200z',t:[280,252]}];
+const m=document.getElementById('map'),info=document.getElementById('mapinfo');
+let s=`<path d="M0 118C80 106 140 128 200 120S330 98 400 112" stroke="#9ec3cf" stroke-width="10" fill="none"/><path d="M130 0V300M0 205H400" stroke="#d6cba8" stroke-width="6"/>`;
+Z.forEach(z=>{const dash=z.n===8?'stroke="#9c1c10" stroke-width="2.5" stroke-dasharray="6 5"':'stroke="rgba(40,30,10,.35)" stroke-width="1.5"';
+  s+=`<g class="z" tabindex="0" role="button" aria-label="${z.name}" data-n="${z.n}"><path d="${z.p}" fill="${z.c}" ${dash} stroke-linejoin="round"/><text x="${z.t[0]}" y="${z.t[1]}" text-anchor="middle" fill="${z.n===7?'#8b1a10':'#2b241a'}">${z.n}</text></g>`});
+s+=`<g pointer-events="none"><circle cx="280" cy="248" r="5" fill="#9c1c10"><animate attributeName="r" values="4;8;4" dur="1.6s" repeatCount="indefinite"/></circle><text x="292" y="275" font-size="12" fill="#9c1c10" style="font-size:12px">你在这里</text></g>`;
+m.innerHTML=s;
+const pick=n=>{const z=Z[n-1];m.querySelectorAll('.z').forEach(g=>g.classList.toggle('on',g.dataset.n==n));
+  info.innerHTML=`<h3>${z.name}${z.sub?'　<small style="font-size:15px;font-weight:400">'+z.sub+'</small>':''}</h3><span class="st" style="background:${z.n===7?'#1c1612':z.n===8?'#9c1c10':z.c==='#a59377'?'#7a6a52':z.c==='#c9b36a'?'#8a7a2a':'#2f6b3f'}">${z.st}</span><p>${z.d}</p>`;GL.buzz(n>=7?'medium':'light')};
+m.addEventListener('click',e=>{const g=e.target.closest('.z');if(g)pick(+g.dataset.n)});
+m.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('.z')){e.preventDefault();pick(+e.target.closest('.z').dataset.n)}});
+})()}catch(e){}
+
+/* ---------- live cam ---------- */
+try{(function(){
+const cam=document.getElementById('cam'),sv=document.getElementById('camsv'),ct=document.getElementById('camt'),cn=document.getElementById('camn'),cv=document.getElementById('camv');
+let s=`<defs><radialGradient id="lamp" cx=".5" cy=".9" r=".7"><stop offset="0" stop-color="#3a5a40"/><stop offset="1" stop-color="#0a120c"/></radialGradient></defs><rect width="640" height="360" fill="url(#lamp)"/><path d="M0 290C160 280 480 300 640 285V360H0z" fill="#1a2a1c"/><path d="M260 360L300 290h40l40 70z" fill="#2a3d2c"/>`;
+const tx=[40,130,215,410,490,575,330];
+tx.forEach((x,i)=>{const h=170+((i*37)%60),w=10+(i%3)*3;s+=`<path d="M${x-w} 292L${x-w*.5} ${292-h}h${w}L${x+w} 292z" fill="#0d170f"/><path d="M${x} ${292-h*.7}l-30 -40M${x} ${292-h*.8}l26 -50M${x} ${292-h*.55}l-38 -10M${x} ${292-h*.6}l34 -18" stroke="#0d170f" stroke-width="4" stroke-linecap="round"/>`});
+s+=`<g id="xtree" opacity="0"><path d="M285 292L289 120h8L301 292z" fill="#0d170f"/><path d="M293 160l-28 -36M293 150l24 -40" stroke="#0d170f" stroke-width="4"/></g>`;
+s+=`<g id="fig" opacity="0"><ellipse cx="0" cy="-160" rx="9" ry="12" fill="#c8d8c0"/><path d="M-8-148Q-12-90-6-20H6Q12-90 8-148z" fill="#b8c8b0"/><path d="M-8-140Q-30-90-26-40M8-140Q30-90 26-40" stroke="#b8c8b0" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="-3" cy="-162" r="1.6" fill="#000"/><circle cx="3" cy="-162" r="1.6" fill="#000"/></g>`;
+sv.innerHTML=s;
+const fig=document.getElementById('fig'),xt=document.getElementById('xtree');
+const pad=n=>String(n).padStart(2,'0');
+let vis=false;new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(cam);
+setInterval(()=>{const d=new Date();ct.textContent=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} 03:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  if(!vis||GL.reduce)return;const p=GL.P;
+  if(Math.random()<.15){cam.classList.add('gl');setTimeout(()=>cam.classList.remove('gl'),140)}
+  if(Math.random()<.05+.25*GL.ss(.5,.8,p)){const x=[85,172,260,450,532][Math.floor(Math.random()*5)];fig.setAttribute('transform',`translate(${x} 292) scale(${(.8+Math.random()*.4).toFixed(2)})`);fig.setAttribute('opacity','1');cv.textContent='2';GL.buzz('light');setTimeout(()=>{fig.setAttribute('opacity','0')},350+Math.random()*300)}
+  if(Math.random()<.2){const x=Math.random()<.5;xt.setAttribute('opacity',x?'1':'0');cn.textContent=x?'8':'7'}
+},1000);
+})()}catch(e){}
+
+/* ---------- comment wall ---------- */
+try{(function(){
+const C=[
+ {u:'阳光小羊',t:'3 天前',c:'#e0a040',m:'带孩子去了第一林区，空气真好！孩子说下次还要来种树。',l:128},
+ {u:'跑步的老陈',t:'2 天前',c:'#4a90b8',m:'每天早上在第二林区跑步，银杏大道太美了，拍照很出片。',l:96},
+ {u:'匿名用户',t:'2 天前',c:'#888',m:'',del:1},
+ {u:'No.0417',t:'1 天前',c:'#5a3a22',m:'今天阳光很好。我想回家。',l:0,tag:'驻林志愿者'},
+ {u:'朵朵妈妈',t:'20 小时前',c:'#c0607a',m:'有人知道树叶一夜之间全掉光是怎么回事吗？孩子一直哭，说爸爸冷。',l:3,r:'归林客服：您好，这是正常的换叶现象。请不要让孩子晚上去树下。'},
+ {u:'No.3310',t:'5 小时前',c:'#5a3a22',m:'小宝在找妈妈的手。',l:0,tag:'驻林志愿者'},
+ {u:'匿名用户',t:'1 小时前',c:'#888',m:'',del:1},
+ {u:'No.12408',t:'刚刚',c:'#5a3a22',m:'这里好黑。土是热的。',l:0,tag:'即将入林'}];
+const el=document.getElementById('wall');
+const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+GL.esc=esc;
+const one=x=>`<div class="cm"><div class="av" style="--c:${x.c}">${esc(x.u.slice(0,1)==='N'?'林':x.u.slice(0,1))}</div><div><div class="who">${esc(x.u)}${x.tag?`<em>${x.tag}</em>`:''}<small>${x.t}</small></div>${x.del?'<p class="del">该留言因违反社区规定已被移除。</p>':`<p>${esc(x.m)}</p>`}${x.l!=null&&!x.del?`<div class="lk">♥ ${x.l}</div>`:''}${x.r?`<div class="reply">${esc(x.r)}</div>`:''}</div></div>`;
+el.innerHTML=C.map(one).join('');
+document.getElementById('post').addEventListener('submit',e=>{e.preventDefault();const ta=document.getElementById('ptext'),v=ta.value.trim();if(!v)return;
+  const d=document.createElement('div');d.innerHTML=one({u:'你',t:'刚刚',c:'#3f5a2c',m:v,l:0});const node=d.firstChild;el.appendChild(node);ta.value='';GL.buzz('light');
+  const body=node.querySelector('.cm > div:last-child')||node.lastChild;
+  setTimeout(()=>{const r=document.createElement('div');r.className='reply';r.textContent='归林客服：已收到。我们一直在看着你。';body.appendChild(r)},1500);
+  setTimeout(()=>{const r=document.createElement('div');r.className='reply';r.textContent='No.0417：快跑';body.appendChild(r);GL.buzz('heavy')},3600);
+});
+})()}catch(e){}
+
+/* ---------- sound: forest by day, something else by night ---------- */
+try{(function(){
+const ss=GL.ss;
+function make(){
+  const ac=new (window.AudioContext||window.webkitAudioContext)(),sr=ac.sampleRate,buf=ac.createBuffer(1,sr*2,sr),d=buf.getChannelData(0);
+  for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  const noise=()=>{const s=ac.createBufferSource();s.buffer=buf;s.loop=true;s.start();return s};
+  const out=ac.createGain();out.gain.value=.9;out.connect(ac.destination);
+  const wf=ac.createBiquadFilter();wf.type='bandpass';wf.frequency.value=520;wf.Q.value=.7;const wg=ac.createGain();wg.gain.value=0;noise().connect(wf).connect(wg).connect(out);
+  const lfo=ac.createOscillator(),lg=ac.createGain();lfo.frequency.value=.11;lg.gain.value=260;lfo.connect(lg).connect(wf.frequency);lfo.start();
+  const dl=ac.createBiquadFilter();dl.type='lowpass';dl.frequency.value=200;const dg=ac.createGain();dg.gain.value=0;
+  [43.6,44.05,65.3,32.7].forEach(fq=>{const o=ac.createOscillator();o.type='sawtooth';o.frequency.value=fq;o.connect(dl);o.start()});dl.connect(dg).connect(out);
+  const hf=ac.createBiquadFilter();hf.type='bandpass';hf.frequency.value=2600;hf.Q.value=4;const hg=ac.createGain();hg.gain.value=0;noise().connect(hf).connect(hg).connect(out);
+  let p=0,on=true;
+  const chirp=()=>{const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.type='sine';const b=2600+Math.random()*1600;
+    o.frequency.setValueAtTime(b,t);o.frequency.exponentialRampToValueAtTime(b*1.45,t+.07);o.frequency.exponentialRampToValueAtTime(b*1.1,t+.14);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.045,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.connect(g).connect(out);o.start(t);o.stop(t+.2)};
+  const thump=(t,a)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(62,t);o.frequency.exponentialRampToValueAtTime(34,t+.22);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(a,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+.3);o.connect(g).connect(out);o.start(t);o.stop(t+.35)};
+  (function birds(){if(on&&Math.random()<1-ss(.1,.42,p)){chirp();if(Math.random()<.5)setTimeout(chirp,160)}setTimeout(birds,500+Math.random()*1400)})();
+  (function heart(){const a=.55*ss(.66,1,p);if(on&&a>.01){const t=ac.currentTime+.02;thump(t,a);thump(t+.19,a*.7)}setTimeout(heart,(1.25-.55*ss(.75,1,p))*1000)})();
+  (function whisper(){const a=.07*ss(.58,1,p);hf.frequency.setTargetAtTime(1400+Math.random()*2600,ac.currentTime,.05);hg.gain.setTargetAtTime(on&&Math.random()<.4?a:a*.1,ac.currentTime,.08);setTimeout(whisper,120+Math.random()*380)})();
+  return{set(v){p=v;const t=ac.currentTime;wg.gain.setTargetAtTime(.16*(1-ss(.4,.85,v))+.05*ss(.85,1,v),t,.3);dg.gain.setTargetAtTime(.22*ss(.42,1,v),t,.3);dl.frequency.setTargetAtTime(120+260*ss(.6,1,v),t,.3)},
+    toggle(){on=!on;on?ac.resume():ac.suspend();return on}};
+}
+const bs=[...document.querySelectorAll('.snd')];
+bs.forEach(b=>b.addEventListener('click',()=>{let on;
+  try{if(!GL.audio){GL.audio=make();GL.audio.set(GL.P);on=true}else on=GL.audio.toggle()}catch(e){return}
+  bs.forEach(x=>{x.setAttribute('aria-pressed',on);x.querySelector('span').textContent=on?'关闭声音':'聆听森林'})}));
+/* the phone's own heartbeat, near the end */
+(function hb(){const a=GL.ss(.88,1,GL.P);if(a>.05&&!document.hidden){GL.buzz('heavy');setTimeout(()=>GL.buzz('medium'),190)}setTimeout(hb,a>.05?(1300-500*a):1500)})();
+})()}catch(e){}
+
+/* ---------- sign-up, ending, secrets ---------- */
+try{(function(){
+const $=id=>document.getElementById(id);
+let who='访客';
+$('form').addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(e.target),nm=(fd.get('name')||'').trim(),al=fd.get('alone'),kg=+fd.get('kg')||0;
+  who=nm||'无名氏';
+  $('ok').innerHTML=`已收到，${GL.esc(who)}。${kg&&kg<48?'你偏瘦了一点，明天早上七点，第一顿饭会送到你门口。':''}${al==='是'?'你一个人住，这很好，不会有人来找你。':'没关系，家人会理解的。他们以后也会来。'}不必出门，今晚我们来接你。`;
+  $('pname').textContent=who;const tn=$('tagname');tn.textContent=who;tn.closest('.tag').classList.remove('blank');
+  document.querySelectorAll('.cntn').forEach(e=>e.textContent='12,409');GL.buzz('success')});
+const t0=Date.now(),dt=new Date();
+$('today').textContent=`${dt.getFullYear()} 年 ${dt.getMonth()+1} 月 ${dt.getDate()} 日（今晚）`;
+setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);$('t').textContent=s<60?`${s} 秒`:`${Math.floor(s/60)} 分 ${s%60} 秒`},1000);
+new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){document.querySelectorAll('.cntn').forEach(e=>e.textContent='12,409');GL.ls.set('end','1');
+  const n=GL.waterCount?GL.waterCount():0;$('watered').textContent=n?`你在第一林区给一棵小香樟浇了 ${n} 次水。它长得很好。现在轮到它照顾你了。`:'你一次也没有给那棵小树苗浇过水。没关系，以后有的是时间。'}})).observe($('end'));
+new IntersectionObserver(es=>{if(es[0].isIntersecting)$('spell').classList.add('on')},{threshold:.6}).observe($('spell'));
+const msgs=['无法取消。根已经扎下了。','别动。越挣扎，长得越快。','它们都醒了。','……'];let ci=0;
+$('cancel').addEventListener('click',()=>{const cb=$('cancel');$('cmsg').textContent=msgs[Math.min(ci,msgs.length-1)];cb.classList.remove('shk');void cb.offsetWidth;cb.classList.add('shk');GL.buzz('error');
+  if(ci===2){GL.eyesBoost=1;GL.dirty=true}if(ci>=3){cb.disabled=true;cb.style.opacity=.3}ci++});
+let taps=0,tt;
+$('logo').addEventListener('click',()=>{taps++;clearTimeout(tt);tt=setTimeout(()=>taps=0,1500);if(taps>=7){taps=0;$('secret').classList.add('on');GL.buzz('heavy')}else if(taps===1){scrollTo({top:0,behavior:GL.reduce?'auto':'smooth'})}});
+$('secretx').addEventListener('click',()=>$('secret').classList.remove('on'));
+$('secret').addEventListener('click',e=>{if(e.target.id==='secret')$('secret').classList.remove('on')});
+})()}catch(e){}
+</script>
+</body>
+</html>
